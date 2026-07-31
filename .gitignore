@@ -1,0 +1,80 @@
+# Visual Studio / .NET build artifacts
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[xX]64/
+[xX]86/
+[Aa]rtifacts/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+
+# IDE folders
+.vs/
+.vscode/
+.idea/
+*.code-workspace
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Test results
+TestResults/
+*.trx
+*.log
+
+# Compiled files
+*.exe
+*.dll
+*.app
+*.pdb
+*.cache
+*.ilk
+*.aps
+*.pch
+*.exp
+*.lib
+*.ncb
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.vspscc
+*.vssscc
+*.builds
+*.pidb
+*.svclog
+*.scc
+
+# SQL / local DB
+*.mdf
+*.ldf
+*.ndf
+
+# Resharper / Rider
+_ReSharper*/
+*.DotSettings.user
+
+# Misc
+Thumbs.db
+Desktop.ini
+*.orig
+*.rej
+
+# Publish output
+publish/
+
+# Generated docs
+Documentation/Generated/

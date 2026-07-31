@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../DEPOR-UNED/Entidades/Entidades.csproj" />
+  <Project Path="BibliotecaCliente.Presentacion.csproj" />
+</Solution>

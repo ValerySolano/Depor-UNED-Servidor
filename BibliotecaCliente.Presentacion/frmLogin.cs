@@ -15,26 +15,35 @@ namespace BibliotecaCliente.Presentacion
 
         private void btnIniciarSession_Click(object sender, EventArgs e)
         {
-            string identificacion = txtIdentificacion.Text;
-            // Validar que el campo de identificación no esté vacío
+            string identificacion = txtIdentificacion.Text?.Trim();
+
             if (string.IsNullOrWhiteSpace(identificacion))
             {
                 MessageBox.Show("Por favor, ingrese su identificación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            } else
-            {
-                // Intentar conectar al servidor
-                bool conectado = ClienteTCP.Conectar(identificacion);
-                if (conectado)
-                {
-                    MessageBox.Show("Conexión exitosa al servidor.", "Conexión establecida", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo conectar al servidor. Por favor, intente nuevamente.", "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
 
+            bool identificacionExiste = ClienteTCP.ValidarIdentificacion(identificacion);
+            if (!identificacionExiste)
+            {
+                MessageBox.Show("La identificación ingresada no existe en el sistema.", "Identificación inválida", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            bool conectado = ClienteTCP.Conectar(identificacion);
+            if (conectado)
+            {
+                clienteConectado = true;
+                MessageBox.Show("Conexión exitosa al servidor.", "Conexión establecida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                FrmPanelCliente panelCliente = new FrmPanelCliente();
+                panelCliente.Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("No se pudo conectar al servidor. Por favor, intente nuevamente.", "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

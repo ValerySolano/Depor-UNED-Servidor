@@ -62,6 +62,12 @@ namespace presentación
                     var entidadCliente = JsonConvert.DeserializeObject<Cliente>(JsonConvert.SerializeObject(entidad));
                     logicaCliente.AgregarCliente(entidadCliente);
                     break;
+                case "ValidarIdentificacion":
+                    var identificacionCliente = (string)entidad;
+                    bool existeIdentificacion = logicaCliente.ObtenerClientes()
+                        .Any(cliente => cliente.Identificacion == identificacionCliente);
+                    EnviarRespuesta(existeIdentificacion.ToString(), ref servidorStreamWriter);
+                    break;
 
                 case "Desconectar":
                     Desconectar((string)entidad);

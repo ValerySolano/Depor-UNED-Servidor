@@ -165,6 +165,7 @@
             Controls.Add(groupBox1);
             Margin = new Padding(3, 2, 3, 2);
             Name = "ServidorInformacion";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Aplicación para la vista de acciones y acceso al Panel Administrativo";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

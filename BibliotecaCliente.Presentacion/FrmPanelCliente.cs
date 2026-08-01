@@ -26,7 +26,19 @@ namespace BibliotecaCliente.Presentacion
                 ? "Usuario"
                 : this.identificacionCliente;
 
+            // Agregar manejador de evento para cerrar la conexión al salir
+            this.FormClosing += FrmPanelCliente_FormClosing;
+
             CargarVentasCliente();
+        }
+
+        private void FrmPanelCliente_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Desconectar el cliente TCP cuando se cierre el formulario
+            if (!string.IsNullOrWhiteSpace(identificacionCliente))
+            {
+                ClienteTCP.Desconectar(identificacionCliente);
+            }
         }
 
         private void CargarVentasCliente()
@@ -82,8 +94,11 @@ namespace BibliotecaCliente.Presentacion
 
         private void btNueva_Click(object sender, EventArgs e)
         {
-            FrmRegistroVenta frmRegistroVenta = new FrmRegistroVenta();
+            FrmRegistroVenta frmRegistroVenta = new FrmRegistroVenta(identificacionCliente);
             frmRegistroVenta.ShowDialog();
+            
+            // Recargar ventas después de cerrar el formulario de registro
+            CargarVentasCliente();
         }
 
         private void btnSalir_Click(object sender, EventArgs e)

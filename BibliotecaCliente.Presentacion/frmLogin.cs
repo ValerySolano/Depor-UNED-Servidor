@@ -23,37 +23,53 @@ namespace BibliotecaCliente.Presentacion
                 return;
             }
 
-            string resultadoValidacion = ClienteTCP.ValidarIdentificacion(identificacion);
-            
-            if (resultadoValidacion == "NOEXISTE")
-            {
-                MessageBox.Show("La identificación ingresada no existe en el sistema.", "Identificación inválida", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else if (resultadoValidacion == "INACTIVO")
-            {
-                MessageBox.Show("Su cuenta está inactiva. No puede iniciar sesión en este momento.\n\nPor favor, contacte al administrador del sistema.", "Usuario inactivo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            else if (resultadoValidacion != "VALIDO")
-            {
-                MessageBox.Show("Error al validar la identificación. Por favor, intente nuevamente.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            // Conectar y validar en una sola operación usando la misma conexión TCP
+            this.labelConexion.Text = "Conectando al servidor...";
+            this.labelConexion.Refresh(); // Asegura que el label se actualice antes de la operación de red
+            this.labelConexionError.Text = " ";
+            this.labelConexionError.Refresh(); // Asegura que el label se actualice antes de la operación de red
+            this.btnIniciarSession.Enabled = false; // Deshabilitar el botón mientras se realiza la conexión
 
-            bool conectado = ClienteTCP.Conectar(identificacion);
-            if (conectado)
+            string resultado = ClienteTCP.ConectarYValidar(identificacion);
+            this.labelConexion.Text = " ";
+            this.labelConexion.Refresh(); // Asegura que el label se actualice después de la operación de red
+            this.btnIniciarSession.Enabled = true; // Rehabilitar el botón después de la operación
+            if (resultado == "NOEXISTE")
+            {
+               this.labelConexionError.Text = "La identificación ingresada no existe en el sistema.";
+                this.labelConexion.Text = " ";
+                return;
+            }
+            else if (resultado == "INACTIVO")
+            {
+               this.labelConexionError.Text = "Su cuenta está inactiva. No puede iniciar sesión en este momento.\n\nPor favor, contacte al administrador del sistema.";
+                this.labelConexion.Text = " ";
+                this.labelConexion.Refresh(); // Asegura que el label se actualice después de la operación de red
+                return;
+            }
+            else if (resultado == "VALIDO")
             {
                 clienteConectado = true;
-                MessageBox.Show("Conexión exitosa al servidor.", "Conexión establecida", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 FrmPanelCliente panelCliente = new FrmPanelCliente(identificacion);
+                
+                // Suscribirse al evento FormClosed para volver a mostrar el login cuando se cierre
+                panelCliente.FormClosed += (s, args) =>
+                {
+                    txtIdentificacion.Clear();
+                    this.Show();
+                    clienteConectado = false;
+                };
+                
                 panelCliente.Show();
                 this.Hide();
+                this.labelConexion.Text = "Conexión establecida con el servidor.";
+                this.labelConexionError.Text = " ";
+                this.labelConexion.Refresh(); // Asegura que el label se actualice después de la operación de red
+                this.labelConexionError.Refresh(); // Asegura que el label se actualice después de la operación de red
             }
             else
             {
-                MessageBox.Show("No se pudo conectar al servidor. Por favor, intente nuevamente.", "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.labelConexionError.Text = "Error de conexión TCP con el servidor. Intente nuevamente.";
             }
         }
     }

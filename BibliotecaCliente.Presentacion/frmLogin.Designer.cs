@@ -33,14 +33,17 @@
             txtIdentificacion = new TextBox();
             btnIniciarSession = new Button();
             label1 = new Label();
+            labelConexionError = new Label();
+            labelConexion = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(labelIdentifiacion);
             panel1.Controls.Add(txtIdentificacion);
-            panel1.Location = new Point(49, 54);
+            panel1.Location = new Point(178, 78);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
             panel1.Size = new Size(368, 124);
@@ -67,7 +70,7 @@
             // 
             // btnIniciarSession
             // 
-            btnIniciarSession.Location = new Point(143, 192);
+            btnIniciarSession.Location = new Point(260, 219);
             btnIniciarSession.Margin = new Padding(3, 2, 3, 2);
             btnIniciarSession.Name = "btnIniciarSession";
             btnIniciarSession.Size = new Size(195, 37);
@@ -80,17 +83,41 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(87, 14);
+            label1.Location = new Point(228, 9);
             label1.Name = "label1";
             label1.Size = new Size(265, 30);
             label1.TabIndex = 2;
             label1.Text = "Sistema de venta en linea ";
             // 
+            // labelConexionError
+            // 
+            labelConexionError.AutoSize = true;
+            labelConexionError.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelConexionError.ForeColor = Color.Green;
+            labelConexionError.Location = new Point(182, 270);
+            labelConexionError.Name = "labelConexionError";
+            labelConexionError.Size = new Size(0, 21);
+            labelConexionError.TabIndex = 3;
+            labelConexionError.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // labelConexion
+            // 
+            labelConexion.AutoSize = true;
+            labelConexion.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelConexion.ForeColor = Color.Green;
+            labelConexion.Location = new Point(299, 55);
+            labelConexion.Name = "labelConexion";
+            labelConexion.Size = new Size(0, 21);
+            labelConexion.TabIndex = 4;
+            labelConexion.TextAlign = ContentAlignment.TopCenter;
+            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(476, 245);
+            ClientSize = new Size(692, 300);
+            Controls.Add(labelConexion);
+            Controls.Add(labelConexionError);
             Controls.Add(label1);
             Controls.Add(btnIniciarSession);
             Controls.Add(panel1);
@@ -111,5 +138,7 @@
         private Button btnIniciarSession;
         private Label labelIdentifiacion;
         private Label label1;
+        private Label labelConexionError;
+        private Label labelConexion;
     }
 }

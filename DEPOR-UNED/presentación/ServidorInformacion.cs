@@ -42,7 +42,24 @@ namespace presentación
             // Maneja el mensaje recibido 
             try
             {
+                // Validar que el mensaje no sea null o vacío
+                if (string.IsNullOrWhiteSpace(e.mensaje))
+                {
+                    txtBitacora.Invoke(modificarTextotxtBitacora, 
+                        new object[] { "Se recibió un mensaje vacío o null. Ignorando..." });
+                    return;
+                }
+
                 var mensajeRecibido = JsonConvert.DeserializeObject<MensajeSocket<object>>(e.mensaje);
+                
+                // Validar que el objeto deserializado no sea null
+                if (mensajeRecibido == null)
+                {
+                    txtBitacora.Invoke(modificarTextotxtBitacora, 
+                        new object[] { "No se pudo deserializar el mensaje. Ignorando..." });
+                    return;
+                }
+
                 SeleccionarMetodo(mensajeRecibido.Metodo, mensajeRecibido.Entidad, ref e.streamWriter);
             }
             catch (System.Text.Json.JsonException ex)

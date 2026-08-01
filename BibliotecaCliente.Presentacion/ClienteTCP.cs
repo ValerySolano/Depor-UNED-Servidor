@@ -34,22 +34,58 @@ namespace BibliotecaCliente.Presentacion
                 return false;
             }
         }
-       public static bool Conectar(string pIdentificacionCliente)
+       public static string ConectarYValidar(string pIdentificacionCliente)
         {
             try
             {
+                // Establecer la conexión TCP persistente
                 ipServidor = IPAddress.Parse("127.0.0.1");
                 cliente = new TcpClient();
                 serverEndPoint = new IPEndPoint(ipServidor, puerto);
                 cliente.Connect(serverEndPoint);
-                MensajeSocket<string> mensajeSocket = new MensajeSocket<string> { Metodo = "Conectar", Entidad = pIdentificacionCliente };
                 clienteStreamWriter = new StreamWriter(cliente.GetStream());
                 clienteStreamReader = new StreamReader(cliente.GetStream());
-                return EnviarRespuesta(JsonConvert.SerializeObject(mensajeSocket));
+
+                // Validar usando la conexión establecida
+                MensajeSocket<string> mensajeValidacion = new MensajeSocket<string> 
+                { 
+                    Metodo = "ValidarIdentificacion", 
+                    Entidad = pIdentificacionCliente 
+                };
+                
+                string resultadoValidacion = EnviarMensaje(JsonConvert.SerializeObject(mensajeValidacion));
+                
+                // Si la validación es exitosa, enviar mensaje de conexión
+                if (resultadoValidacion == "VALIDO")
+                {
+                    MensajeSocket<string> mensajeConexion = new MensajeSocket<string> 
+                    { 
+                        Metodo = "Conectar", 
+                        Entidad = pIdentificacionCliente 
+                    };
+                    EnviarRespuesta(JsonConvert.SerializeObject(mensajeConexion));
+                    return "VALIDO";
+                }
+                else
+                {
+                    // Si la validación falla, cerrar la conexión
+                    clienteStreamWriter?.Close();
+                    clienteStreamReader?.Close();
+                    cliente?.Close();
+                    return resultadoValidacion ?? "ERROR";
+                }
             }
             catch (Exception)
             {
-                return false;
+                // En caso de error, cerrar la conexión si existe
+                try
+                {
+                    clienteStreamWriter?.Close();
+                    clienteStreamReader?.Close();
+                    cliente?.Close();
+                }
+                catch { }
+                return "ERROR";
             }
         }
         public static void Desconectar(string pIdentificacion)
@@ -66,6 +102,10 @@ namespace BibliotecaCliente.Presentacion
 
         public static string ValidarIdentificacion(string pIdentificacionCliente)
         {
+            TcpClient clienteTemp = null;
+            StreamWriter writerTemp = null;
+            StreamReader readerTemp = null;
+            
             try
             {
                 if (string.IsNullOrWhiteSpace(pIdentificacionCliente))
@@ -73,10 +113,11 @@ namespace BibliotecaCliente.Presentacion
                     return "ERROR";
                 }
 
+                // Crear conexión temporal solo para validación
                 ipServidor = IPAddress.Parse("127.0.0.1");
-                cliente = new TcpClient();
+                clienteTemp = new TcpClient();
                 serverEndPoint = new IPEndPoint(ipServidor, puerto);
-                cliente.Connect(serverEndPoint);
+                clienteTemp.Connect(serverEndPoint);
 
                 MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
                 {
@@ -84,15 +125,31 @@ namespace BibliotecaCliente.Presentacion
                     Entidad = pIdentificacionCliente.Trim()
                 };
 
-                clienteStreamWriter = new StreamWriter(cliente.GetStream());
-                clienteStreamReader = new StreamReader(cliente.GetStream());
+                writerTemp = new StreamWriter(clienteTemp.GetStream());
+                readerTemp = new StreamReader(clienteTemp.GetStream());
 
-                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
+                writerTemp.WriteLine(JsonConvert.SerializeObject(mensajeSocket));
+                writerTemp.Flush();
+                
+                string respuesta = readerTemp.ReadLine();
                 return respuesta ?? "ERROR";
             }
             catch (Exception)
             {
                 return "ERROR";
+            }
+            finally
+            {
+                try
+                {
+                    writerTemp?.Close();
+                    readerTemp?.Close();
+                    clienteTemp?.Close();
+                }
+                catch
+                {
+                    // Ignorar errores al cerrar
+                }
             }
         }
 
@@ -117,19 +174,16 @@ namespace BibliotecaCliente.Presentacion
                     return new List<Venta>();
                 }
 
-                ipServidor = IPAddress.Parse("127.0.0.1");
-                cliente = new TcpClient();
-                serverEndPoint = new IPEndPoint(ipServidor, puerto);
-                cliente.Connect(serverEndPoint);
+                if (cliente == null || !cliente.Connected)
+                {
+                    return new List<Venta>();
+                }
 
                 MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
                 {
                     Metodo = "ObtenerVentasCliente",
                     Entidad = identificacionCliente.Trim()
                 };
-
-                clienteStreamWriter = new StreamWriter(cliente.GetStream());
-                clienteStreamReader = new StreamReader(cliente.GetStream());
 
                 string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
                 
@@ -145,38 +199,22 @@ namespace BibliotecaCliente.Presentacion
             {
                 return new List<Venta>();
             }
-            finally
-            {
-                try
-                {
-                    clienteStreamWriter?.Close();
-                    clienteStreamReader?.Close();
-                    cliente?.Close();
-                }
-                catch
-                {
-                    // Ignorar errores al cerrar
-                }
-            }
         }
 
         public static List<Partido> ObtenerPartidos()
         {
             try
             {
-                ipServidor = IPAddress.Parse("127.0.0.1");
-                cliente = new TcpClient();
-                serverEndPoint = new IPEndPoint(ipServidor, puerto);
-                cliente.Connect(serverEndPoint);
+                if (cliente == null || !cliente.Connected)
+                {
+                    return new List<Partido>();
+                }
 
                 MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
                 {
                     Metodo = "ObtenerPartidos",
                     Entidad = ""
                 };
-
-                clienteStreamWriter = new StreamWriter(cliente.GetStream());
-                clienteStreamReader = new StreamReader(cliente.GetStream());
 
                 string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
 
@@ -192,38 +230,22 @@ namespace BibliotecaCliente.Presentacion
             {
                 return new List<Partido>();
             }
-            finally
-            {
-                try
-                {
-                    clienteStreamWriter?.Close();
-                    clienteStreamReader?.Close();
-                    cliente?.Close();
-                }
-                catch
-                {
-                    // Ignorar errores al cerrar
-                }
-            }
         }
 
         public static List<Localidad> ObtenerLocalidades()
         {
             try
             {
-                ipServidor = IPAddress.Parse("127.0.0.1");
-                cliente = new TcpClient();
-                serverEndPoint = new IPEndPoint(ipServidor, puerto);
-                cliente.Connect(serverEndPoint);
+                if (cliente == null || !cliente.Connected)
+                {
+                    return new List<Localidad>();
+                }
 
                 MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
                 {
                     Metodo = "ObtenerLocalidades",
                     Entidad = ""
                 };
-
-                clienteStreamWriter = new StreamWriter(cliente.GetStream());
-                clienteStreamReader = new StreamReader(cliente.GetStream());
 
                 string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
 
@@ -239,29 +261,16 @@ namespace BibliotecaCliente.Presentacion
             {
                 return new List<Localidad>();
             }
-            finally
-            {
-                try
-                {
-                    clienteStreamWriter?.Close();
-                    clienteStreamReader?.Close();
-                    cliente?.Close();
-                }
-                catch
-                {
-                    // Ignorar errores al cerrar
-                }
-            }
         }
 
         public static dynamic VerificarDisponibilidad(int idPartido, int idLocalidad, int cantidad)
         {
             try
             {
-                ipServidor = IPAddress.Parse("127.0.0.1");
-                cliente = new TcpClient();
-                serverEndPoint = new IPEndPoint(ipServidor, puerto);
-                cliente.Connect(serverEndPoint);
+                if (cliente == null || !cliente.Connected)
+                {
+                    return new { disponible = false, cantidadDisponible = 0, precio = 0m };
+                }
 
                 var datosVerificacion = new DatosVerificacionDisponibilidad
                 {
@@ -276,9 +285,6 @@ namespace BibliotecaCliente.Presentacion
                     Entidad = datosVerificacion
                 };
 
-                clienteStreamWriter = new StreamWriter(cliente.GetStream());
-                clienteStreamReader = new StreamReader(cliente.GetStream());
-
                 string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
 
                 if (string.IsNullOrWhiteSpace(respuesta))
@@ -292,19 +298,6 @@ namespace BibliotecaCliente.Presentacion
             catch (Exception)
             {
                 return new { disponible = false, cantidadDisponible = 0, precio = 0m };
-            }
-            finally
-            {
-                try
-                {
-                    clienteStreamWriter?.Close();
-                    clienteStreamReader?.Close();
-                    cliente?.Close();
-                }
-                catch
-                {
-                    // Ignorar errores al cerrar
-                }
             }
         }
     }

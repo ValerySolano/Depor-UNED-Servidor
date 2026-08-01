@@ -64,9 +64,21 @@ namespace presentación
                     break;
                 case "ValidarIdentificacion":
                     var identificacionCliente = (string)entidad;
-                    bool existeIdentificacion = logicaCliente.ObtenerClientes()
-                        .Any(cliente => cliente.Identificacion == identificacionCliente);
-                    EnviarRespuesta(existeIdentificacion.ToString(), ref servidorStreamWriter);
+                    var clienteEncontrado = logicaCliente.ObtenerClientes()
+                        .FirstOrDefault(cliente => cliente.Identificacion == identificacionCliente);
+                    
+                    if (clienteEncontrado == null)
+                    {
+                        EnviarRespuesta("NOEXISTE", ref servidorStreamWriter);
+                    }
+                    else if (!clienteEncontrado.Activo)
+                    {
+                        EnviarRespuesta("INACTIVO", ref servidorStreamWriter);
+                    }
+                    else
+                    {
+                        EnviarRespuesta("VALIDO", ref servidorStreamWriter);
+                    }
                     break;
 
                 case "Desconectar":

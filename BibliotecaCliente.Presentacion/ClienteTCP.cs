@@ -64,13 +64,13 @@ namespace BibliotecaCliente.Presentacion
             }
         }
 
-        public static bool ValidarIdentificacion(string pIdentificacionCliente)
+        public static string ValidarIdentificacion(string pIdentificacionCliente)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(pIdentificacionCliente))
                 {
-                    return false;
+                    return "ERROR";
                 }
 
                 ipServidor = IPAddress.Parse("127.0.0.1");
@@ -88,11 +88,11 @@ namespace BibliotecaCliente.Presentacion
                 clienteStreamReader = new StreamReader(cliente.GetStream());
 
                 string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
-                return bool.TryParse(respuesta, out bool existe) && existe;
+                return respuesta ?? "ERROR";
             }
             catch (Exception)
             {
-                return false;
+                return "ERROR";
             }
         }
 

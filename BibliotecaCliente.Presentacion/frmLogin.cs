@@ -23,10 +23,21 @@ namespace BibliotecaCliente.Presentacion
                 return;
             }
 
-            bool identificacionExiste = ClienteTCP.ValidarIdentificacion(identificacion);
-            if (!identificacionExiste)
+            string resultadoValidacion = ClienteTCP.ValidarIdentificacion(identificacion);
+            
+            if (resultadoValidacion == "NOEXISTE")
             {
                 MessageBox.Show("La identificación ingresada no existe en el sistema.", "Identificación inválida", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (resultadoValidacion == "INACTIVO")
+            {
+                MessageBox.Show("Su cuenta está inactiva. No puede iniciar sesión en este momento.\n\nPor favor, contacte al administrador del sistema.", "Usuario inactivo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (resultadoValidacion != "VALIDO")
+            {
+                MessageBox.Show("Error al validar la identificación. Por favor, intente nuevamente.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

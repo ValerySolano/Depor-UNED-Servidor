@@ -1,7 +1,7 @@
 
 /*
 * UNED - Programación Avanzada
-* Proyecto#1 Sistema de administración de partidos de fútbol
+* Proyecto#2 Sistema de administración de partidos de fútbol
 * Autor: Valery Fonseca Solano
 * Fecha: 21/06/2026
 *///------------------------------------------------------------------------------

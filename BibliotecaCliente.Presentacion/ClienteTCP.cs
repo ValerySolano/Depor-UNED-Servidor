@@ -38,7 +38,6 @@ namespace BibliotecaCliente.Presentacion
         {
             try
             {
-                // Establecer la conexión TCP persistente
                 ipServidor = IPAddress.Parse("127.0.0.1");
                 cliente = new TcpClient();
                 serverEndPoint = new IPEndPoint(ipServidor, puerto);
@@ -46,7 +45,6 @@ namespace BibliotecaCliente.Presentacion
                 clienteStreamWriter = new StreamWriter(cliente.GetStream());
                 clienteStreamReader = new StreamReader(cliente.GetStream());
 
-                // Validar usando la conexión establecida
                 MensajeSocket<string> mensajeValidacion = new MensajeSocket<string> 
                 { 
                     Metodo = "ValidarIdentificacion", 
@@ -55,7 +53,6 @@ namespace BibliotecaCliente.Presentacion
                 
                 string resultadoValidacion = EnviarMensaje(JsonConvert.SerializeObject(mensajeValidacion));
                 
-                // Si la validación es exitosa, enviar mensaje de conexión
                 if (resultadoValidacion == "VALIDO")
                 {
                     MensajeSocket<string> mensajeConexion = new MensajeSocket<string> 
@@ -68,7 +65,6 @@ namespace BibliotecaCliente.Presentacion
                 }
                 else
                 {
-                    // Si la validación falla, cerrar la conexión
                     clienteStreamWriter?.Close();
                     clienteStreamReader?.Close();
                     cliente?.Close();
@@ -77,7 +73,6 @@ namespace BibliotecaCliente.Presentacion
             }
             catch (Exception)
             {
-                // En caso de error, cerrar la conexión si existe
                 try
                 {
                     clienteStreamWriter?.Close();

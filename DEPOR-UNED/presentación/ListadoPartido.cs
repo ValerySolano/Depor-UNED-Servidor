@@ -1,6 +1,6 @@
 /*
 * UNED - Programación Avanzada
-* Proyecto#1 Sistema de administración de partidos de fútbol
+* Proyecto#2 Sistema de administración de partidos de fútbol
 * Autor: Valery Fonseca Solano
 * Fecha: 21/06/2026
 */
@@ -11,13 +11,11 @@ namespace presentación
     public partial class ListadoPartido : Form
     {
 
-        // Ejecuta la logica principal del metodo ListadoPartido.
         public ListadoPartido()
         {
             InitializeComponent();
         }
 
-        // Maneja el evento Click del control btnNuevoPartido.
         private void btnNuevoPartido_Click(object sender, EventArgs e)
         {
             RegistroPartidos registroPartidos = new RegistroPartidos();
@@ -25,13 +23,11 @@ namespace presentación
             CargarPartidos();
         }
 
-        // Maneja la carga inicial del formulario o control ListadoPartido.
         private void ListadoPartido_Load(object? sender, EventArgs e)
         {
             CargarPartidos();
         }
 
-        // Ejecuta la logica principal del metodo CargarPartidos.
         private void CargarPartidos()
         {
             try

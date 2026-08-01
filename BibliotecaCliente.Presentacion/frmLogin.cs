@@ -1,3 +1,9 @@
+/*
+* UNED - Programación Avanzada
+* Proyecto#2 Sistema de administración de partidos de fútbol
+* Autor: Valery Fonseca Solano
+* Fecha: 1/08/2026
+*/
 namespace BibliotecaCliente.Presentacion
 {
     public partial class frmLogin : Form

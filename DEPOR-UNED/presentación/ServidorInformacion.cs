@@ -39,10 +39,8 @@ namespace presentación
             modificarListBoxClientes = new ModificarListBoxDelegate(ModificarListBox);
         }
         private void ComunicacionTCP_MensajeRecibido(object sender, (string mensaje, StreamWriter streamWriter) e) {
-            // Maneja el mensaje recibido 
             try
             {
-                // Validar que el mensaje no sea null o vacío
                 if (string.IsNullOrWhiteSpace(e.mensaje))
                 {
                     txtBitacora.Invoke(modificarTextotxtBitacora, 
@@ -52,7 +50,6 @@ namespace presentación
 
                 var mensajeRecibido = JsonConvert.DeserializeObject<MensajeSocket<object>>(e.mensaje);
                 
-                // Validar que el objeto deserializado no sea null
                 if (mensajeRecibido == null)
                 {
                     txtBitacora.Invoke(modificarTextotxtBitacora, 

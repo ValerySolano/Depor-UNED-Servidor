@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+* UNED - Programación Avanzada
+* Proyecto#2 Sistema de administración de partidos de fútbol
+* Autor: Valery Fonseca Solano
+* Fecha: 1/08/2026
+*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,10 +29,7 @@ namespace BibliotecaCliente.Presentacion
             InitializeComponent();
             this.identificacionCliente = identificacionCliente ?? string.Empty;
             
-            // Cargar y mostrar el nombre del cliente
             CargarNombreCliente();
-
-            // Agregar manejador de evento para cerrar la conexión al salir
             this.FormClosing += FrmPanelCliente_FormClosing;
 
             CargarVentasCliente();
@@ -34,7 +37,6 @@ namespace BibliotecaCliente.Presentacion
 
         private void FrmPanelCliente_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Desconectar el cliente TCP cuando se cierre el formulario
             if (!string.IsNullOrWhiteSpace(identificacionCliente))
             {
                 ClienteTCP.Desconectar(identificacionCliente);
@@ -64,7 +66,6 @@ namespace BibliotecaCliente.Presentacion
             }
             catch (Exception)
             {
-                // Si hay error, mostrar al menos la identificación
                 labelUser.Text = identificacionCliente;
             }
         }
@@ -125,7 +126,6 @@ namespace BibliotecaCliente.Presentacion
             FrmRegistroVenta frmRegistroVenta = new FrmRegistroVenta(identificacionCliente);
             frmRegistroVenta.ShowDialog();
             
-            // Recargar ventas después de cerrar el formulario de registro
             CargarVentasCliente();
         }
 

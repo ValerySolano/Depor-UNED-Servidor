@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+* UNED - Programación Avanzada
+* Proyecto#2 Sistema de administración de partidos de fútbol
+* Autor: Valery Fonseca Solano
+* Fecha: 1/08/2026
+*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -94,7 +100,6 @@ namespace BibliotecaCliente.Presentacion
         {
             try
             {
-                // Validar selecciones
                 if (comboPartido.SelectedIndex <= 0)
                 {
                     MessageBox.Show("Por favor seleccione un partido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -119,11 +124,9 @@ namespace BibliotecaCliente.Presentacion
                     return;
                 }
 
-                // Obtener partido y localidad seleccionados
                 var partidoSeleccionado = partidos[comboPartido.SelectedIndex - 1];
                 var localidadSeleccionada = localidades[comboLocalidad.SelectedIndex - 1];
 
-                // Verificar disponibilidad
                 var resultado = ClienteTCP.VerificarDisponibilidad(
                     partidoSeleccionado.IdPartido,
                     localidadSeleccionada.IdLocalidad,

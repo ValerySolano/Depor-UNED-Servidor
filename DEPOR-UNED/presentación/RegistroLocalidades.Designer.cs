@@ -84,35 +84,37 @@ namespace presentación
             panelMain.Controls.Add(btnGuardar);
             panelMain.Controls.Add(btnLimpiar);
             panelMain.Controls.Add(btnSalir);
-            panelMain.Location = new Point(12, 12);
+            panelMain.Location = new Point(10, 9);
+            panelMain.Margin = new Padding(3, 2, 3, 2);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(760, 396);
+            panelMain.Size = new Size(665, 297);
             panelMain.TabIndex = 0;
             // 
             // titleLabel
             // 
             titleLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             titleLabel.ForeColor = Color.FromArgb(3, 78, 162);
-            titleLabel.Location = new Point(20, 16);
+            titleLabel.Location = new Point(18, 12);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(420, 28);
+            titleLabel.Size = new Size(368, 21);
             titleLabel.TabIndex = 0;
             titleLabel.Text = "REGISTRO DE LOCALIDADES";
             // 
             // separator
             // 
             separator.BackColor = Color.FromArgb(3, 78, 162);
-            separator.Location = new Point(20, 52);
+            separator.Location = new Point(18, 39);
+            separator.Margin = new Padding(3, 2, 3, 2);
             separator.Name = "separator";
-            separator.Size = new Size(720, 4);
+            separator.Size = new Size(630, 3);
             separator.TabIndex = 1;
             // 
             // lblId
             // 
             lblId.AutoSize = true;
-            lblId.Location = new Point(20, 80);
+            lblId.Location = new Point(18, 60);
             lblId.Name = "lblId";
-            lblId.Size = new Size(94, 20);
+            lblId.Size = new Size(74, 15);
             lblId.TabIndex = 2;
             lblId.Text = "Id Localidad:";
             // 
@@ -120,9 +122,10 @@ namespace presentación
             // 
             idBorder.BackColor = Color.FromArgb(3, 78, 162);
             idBorder.Controls.Add(idInner);
-            idBorder.Location = new Point(130, 76);
+            idBorder.Location = new Point(114, 57);
+            idBorder.Margin = new Padding(3, 2, 3, 2);
             idBorder.Name = "idBorder";
-            idBorder.Size = new Size(220, 32);
+            idBorder.Size = new Size(192, 24);
             idBorder.TabIndex = 3;
             // 
             // idInner
@@ -130,24 +133,26 @@ namespace presentación
             idInner.BackColor = Color.White;
             idInner.Controls.Add(textBoxId);
             idInner.Location = new Point(2, 2);
+            idInner.Margin = new Padding(3, 2, 3, 2);
             idInner.Name = "idInner";
-            idInner.Size = new Size(216, 28);
+            idInner.Size = new Size(189, 21);
             idInner.TabIndex = 0;
             // 
             // textBoxId
             // 
             textBoxId.BorderStyle = BorderStyle.None;
-            textBoxId.Location = new Point(6, 5);
+            textBoxId.Location = new Point(5, 4);
+            textBoxId.Margin = new Padding(3, 2, 3, 2);
             textBoxId.Name = "textBoxId";
-            textBoxId.Size = new Size(200, 20);
+            textBoxId.Size = new Size(175, 16);
             textBoxId.TabIndex = 0;
             // 
             // lblNombre
             // 
             lblNombre.AutoSize = true;
-            lblNombre.Location = new Point(20, 126);
+            lblNombre.Location = new Point(18, 94);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(157, 20);
+            lblNombre.Size = new Size(124, 15);
             lblNombre.TabIndex = 4;
             lblNombre.Text = "Nombre de Localidad:";
             // 
@@ -155,9 +160,10 @@ namespace presentación
             // 
             nombreBorder.BackColor = Color.FromArgb(3, 78, 162);
             nombreBorder.Controls.Add(nombreInner);
-            nombreBorder.Location = new Point(20, 150);
+            nombreBorder.Location = new Point(18, 112);
+            nombreBorder.Margin = new Padding(3, 2, 3, 2);
             nombreBorder.Name = "nombreBorder";
-            nombreBorder.Size = new Size(420, 32);
+            nombreBorder.Size = new Size(368, 24);
             nombreBorder.TabIndex = 5;
             // 
             // nombreInner
@@ -165,33 +171,35 @@ namespace presentación
             nombreInner.BackColor = Color.White;
             nombreInner.Controls.Add(textBoxNombre);
             nombreInner.Location = new Point(2, 2);
+            nombreInner.Margin = new Padding(3, 2, 3, 2);
             nombreInner.Name = "nombreInner";
-            nombreInner.Size = new Size(416, 28);
+            nombreInner.Size = new Size(364, 21);
             nombreInner.TabIndex = 0;
             // 
             // textBoxNombre
             // 
             textBoxNombre.BorderStyle = BorderStyle.None;
-            textBoxNombre.Location = new Point(6, 5);
+            textBoxNombre.Location = new Point(5, 4);
+            textBoxNombre.Margin = new Padding(3, 2, 3, 2);
             textBoxNombre.Name = "textBoxNombre";
-            textBoxNombre.Size = new Size(400, 20);
+            textBoxNombre.Size = new Size(350, 16);
             textBoxNombre.TabIndex = 1;
             // 
             // lblPrecio
             // 
             lblPrecio.AutoSize = true;
-            lblPrecio.Location = new Point(20, 198);
+            lblPrecio.Location = new Point(18, 148);
             lblPrecio.Name = "lblPrecio";
-            lblPrecio.Size = new Size(53, 20);
+            lblPrecio.Size = new Size(43, 15);
             lblPrecio.TabIndex = 6;
             lblPrecio.Text = "Precio:";
             // 
             // lblSimbolo
             // 
             lblSimbolo.AutoSize = true;
-            lblSimbolo.Location = new Point(130, 200);
+            lblSimbolo.Location = new Point(114, 150);
             lblSimbolo.Name = "lblSimbolo";
-            lblSimbolo.Size = new Size(17, 20);
+            lblSimbolo.Size = new Size(13, 15);
             lblSimbolo.TabIndex = 7;
             lblSimbolo.Text = "¢";
             // 
@@ -199,9 +207,10 @@ namespace presentación
             // 
             precioBorder.BackColor = Color.FromArgb(3, 78, 162);
             precioBorder.Controls.Add(precioInner);
-            precioBorder.Location = new Point(150, 196);
+            precioBorder.Location = new Point(131, 147);
+            precioBorder.Margin = new Padding(3, 2, 3, 2);
             precioBorder.Name = "precioBorder";
-            precioBorder.Size = new Size(140, 32);
+            precioBorder.Size = new Size(122, 24);
             precioBorder.TabIndex = 8;
             // 
             // precioInner
@@ -209,8 +218,9 @@ namespace presentación
             precioInner.BackColor = Color.White;
             precioInner.Controls.Add(numericPrecio);
             precioInner.Location = new Point(2, 2);
+            precioInner.Margin = new Padding(3, 2, 3, 2);
             precioInner.Name = "precioInner";
-            precioInner.Size = new Size(136, 28);
+            precioInner.Size = new Size(119, 21);
             precioInner.TabIndex = 0;
             // 
             // numericPrecio
@@ -218,27 +228,30 @@ namespace presentación
             numericPrecio.BorderStyle = BorderStyle.None;
             numericPrecio.DecimalPlaces = 2;
             numericPrecio.Increment = new decimal(new int[] { 50, 0, 0, 131072 });
-            numericPrecio.Location = new Point(6, 4);
+            numericPrecio.Location = new Point(5, 3);
+            numericPrecio.Margin = new Padding(3, 2, 3, 2);
             numericPrecio.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numericPrecio.Name = "numericPrecio";
-            numericPrecio.Size = new Size(120, 23);
+            numericPrecio.Size = new Size(105, 19);
             numericPrecio.TabIndex = 2;
             // 
             // imageCard
             // 
             imageCard.BackColor = Color.FromArgb(245, 246, 250);
             imageCard.Controls.Add(pictureBox);
-            imageCard.Location = new Point(480, 76);
+            imageCard.Location = new Point(420, 57);
+            imageCard.Margin = new Padding(3, 2, 3, 2);
             imageCard.Name = "imageCard";
-            imageCard.Size = new Size(212, 220);
+            imageCard.Size = new Size(186, 165);
             imageCard.TabIndex = 9;
             // 
             // pictureBox
             // 
             pictureBox.Image = (Image)resources.GetObject("pictureBox.Image");
-            pictureBox.Location = new Point(3, 4);
+            pictureBox.Location = new Point(3, 3);
+            pictureBox.Margin = new Padding(3, 2, 3, 2);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(205, 210);
+            pictureBox.Size = new Size(179, 158);
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
@@ -248,9 +261,10 @@ namespace presentación
             btnGuardar.BackColor = Color.FromArgb(40, 167, 69);
             btnGuardar.FlatStyle = FlatStyle.Flat;
             btnGuardar.ForeColor = Color.White;
-            btnGuardar.Location = new Point(56, 320);
+            btnGuardar.Location = new Point(49, 240);
+            btnGuardar.Margin = new Padding(3, 2, 3, 2);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(165, 48);
+            btnGuardar.Size = new Size(144, 36);
             btnGuardar.TabIndex = 11;
             btnGuardar.Text = "  Guardar";
             btnGuardar.UseVisualStyleBackColor = false;
@@ -260,9 +274,10 @@ namespace presentación
             btnLimpiar.BackColor = Color.FromArgb(255, 152, 0);
             btnLimpiar.FlatStyle = FlatStyle.Flat;
             btnLimpiar.ForeColor = Color.White;
-            btnLimpiar.Location = new Point(278, 320);
+            btnLimpiar.Location = new Point(243, 240);
+            btnLimpiar.Margin = new Padding(3, 2, 3, 2);
             btnLimpiar.Name = "btnLimpiar";
-            btnLimpiar.Size = new Size(162, 48);
+            btnLimpiar.Size = new Size(142, 36);
             btnLimpiar.TabIndex = 12;
             btnLimpiar.Text = "  Limpiar";
             btnLimpiar.UseVisualStyleBackColor = false;
@@ -272,22 +287,24 @@ namespace presentación
             btnSalir.BackColor = Color.FromArgb(220, 53, 69);
             btnSalir.FlatStyle = FlatStyle.Flat;
             btnSalir.ForeColor = Color.White;
-            btnSalir.Location = new Point(500, 320);
+            btnSalir.Location = new Point(438, 240);
+            btnSalir.Margin = new Padding(3, 2, 3, 2);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(140, 48);
+            btnSalir.Size = new Size(122, 36);
             btnSalir.TabIndex = 13;
             btnSalir.Text = "  Salir";
             btnSalir.UseVisualStyleBackColor = false;
             // 
             // RegistroLocalidades
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(784, 414);
+            ClientSize = new Size(686, 310);
             Controls.Add(panelMain);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "RegistroLocalidades";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Registro de Localidades";
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();

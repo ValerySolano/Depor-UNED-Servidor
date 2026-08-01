@@ -50,10 +50,11 @@ namespace presentación
             DatosPartidos.AllowUserToAddRows = false;
             DatosPartidos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DatosPartidos.Columns.AddRange(new DataGridViewColumn[] { Id, Rival, Fecha, Hora, Activo });
-            DatosPartidos.Location = new Point(-1, 90);
+            DatosPartidos.Location = new Point(-1, 68);
+            DatosPartidos.Margin = new Padding(3, 2, 3, 2);
             DatosPartidos.Name = "DatosPartidos";
             DatosPartidos.RowHeadersWidth = 51;
-            DatosPartidos.Size = new Size(680, 352);
+            DatosPartidos.Size = new Size(595, 264);
             DatosPartidos.TabIndex = 0;
             // 
             // Id
@@ -105,9 +106,9 @@ namespace presentación
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 20);
+            label1.Location = new Point(10, 15);
             label1.Name = "label1";
-            label1.Size = new Size(135, 41);
+            label1.Size = new Size(109, 32);
             label1.TabIndex = 1;
             label1.Text = "Partidos";
             // 
@@ -116,9 +117,10 @@ namespace presentación
             btnNuevoPartido.BackColor = Color.Green;
             btnNuevoPartido.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNuevoPartido.ForeColor = SystemColors.ButtonHighlight;
-            btnNuevoPartido.Location = new Point(510, 45);
+            btnNuevoPartido.Location = new Point(446, 34);
+            btnNuevoPartido.Margin = new Padding(3, 2, 3, 2);
             btnNuevoPartido.Name = "btnNuevoPartido";
-            btnNuevoPartido.Size = new Size(169, 39);
+            btnNuevoPartido.Size = new Size(148, 29);
             btnNuevoPartido.TabIndex = 2;
             btnNuevoPartido.Text = "+Nuevo";
             btnNuevoPartido.UseVisualStyleBackColor = false;
@@ -126,16 +128,17 @@ namespace presentación
             // 
             // ListadoPartido
             // 
-            Load += ListadoPartido_Load;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(681, 443);
+            ClientSize = new Size(596, 332);
             Controls.Add(btnNuevoPartido);
             Controls.Add(label1);
             Controls.Add(DatosPartidos);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ListadoPartido";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "ListadoPartido";
+            Load += ListadoPartido_Load;
             ((System.ComponentModel.ISupportInitialize)DatosPartidos).EndInit();
             ResumeLayout(false);
             PerformLayout();

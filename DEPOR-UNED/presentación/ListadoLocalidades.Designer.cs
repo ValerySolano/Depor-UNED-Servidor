@@ -49,10 +49,11 @@ namespace presentación
             DatosLocalidades.AllowUserToDeleteRows = false;
             DatosLocalidades.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DatosLocalidades.Columns.AddRange(new DataGridViewColumn[] { Id, Nombre, Precio });
-            DatosLocalidades.Location = new Point(2, 80);
+            DatosLocalidades.Location = new Point(2, 60);
+            DatosLocalidades.Margin = new Padding(3, 2, 3, 2);
             DatosLocalidades.Name = "DatosLocalidades";
             DatosLocalidades.RowHeadersWidth = 51;
-            DatosLocalidades.Size = new Size(430, 243);
+            DatosLocalidades.Size = new Size(376, 182);
             DatosLocalidades.TabIndex = 0;
             // 
             // Id
@@ -87,9 +88,9 @@ namespace presentación
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(10, 7);
             label1.Name = "label1";
-            label1.Size = new Size(225, 28);
+            label1.Size = new Size(182, 21);
             label1.TabIndex = 1;
             label1.Text = "Listado de Localidades";
             // 
@@ -98,9 +99,10 @@ namespace presentación
             btnNuevoLocalidad.BackColor = Color.DarkGreen;
             btnNuevoLocalidad.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNuevoLocalidad.ForeColor = SystemColors.ButtonHighlight;
-            btnNuevoLocalidad.Location = new Point(313, 35);
+            btnNuevoLocalidad.Location = new Point(274, 26);
+            btnNuevoLocalidad.Margin = new Padding(3, 2, 3, 2);
             btnNuevoLocalidad.Name = "btnNuevoLocalidad";
-            btnNuevoLocalidad.Size = new Size(119, 39);
+            btnNuevoLocalidad.Size = new Size(104, 29);
             btnNuevoLocalidad.TabIndex = 2;
             btnNuevoLocalidad.Text = "+Nuevo";
             btnNuevoLocalidad.UseVisualStyleBackColor = false;
@@ -108,16 +110,17 @@ namespace presentación
             // 
             // ListadoLocalidades
             // 
-            Load += ListadoLocalidades_Load;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(433, 325);
+            ClientSize = new Size(379, 244);
             Controls.Add(btnNuevoLocalidad);
             Controls.Add(label1);
             Controls.Add(DatosLocalidades);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ListadoLocalidades";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "ListadoLocalidades";
+            Load += ListadoLocalidades_Load;
             ((System.ComponentModel.ISupportInitialize)DatosLocalidades).EndInit();
             ResumeLayout(false);
             PerformLayout();

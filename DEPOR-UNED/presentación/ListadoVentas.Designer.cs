@@ -35,8 +35,6 @@ namespace presentación
         private void InitializeComponent()
         {
             DatosVentas = new DataGridView();
-            label1 = new Label();
-            btnNuevo = new Button();
             Id = new DataGridViewTextBoxColumn();
             Cliente = new DataGridViewTextBoxColumn();
             Rival = new DataGridViewTextBoxColumn();
@@ -50,6 +48,8 @@ namespace presentación
             FechaVenta = new DataGridViewTextBoxColumn();
             MontoTotal = new DataGridViewTextBoxColumn();
             TipoVenta = new DataGridViewTextBoxColumn();
+            label1 = new Label();
+            btnNuevo = new Button();
             ((System.ComponentModel.ISupportInitialize)DatosVentas).BeginInit();
             SuspendLayout();
             // 
@@ -60,35 +60,12 @@ namespace presentación
             DatosVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             DatosVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DatosVentas.Columns.AddRange(new DataGridViewColumn[] { Id, Cliente, Rival, Fecha, Hora, PartidoActivo, IdLocalidad, Localidad, Vendedor, Cantidad, FechaVenta, MontoTotal, TipoVenta });
-            DatosVentas.Location = new Point(2, 65);
+            DatosVentas.Location = new Point(2, 49);
+            DatosVentas.Margin = new Padding(3, 2, 3, 2);
             DatosVentas.Name = "DatosVentas";
             DatosVentas.RowHeadersWidth = 51;
-            DatosVentas.Size = new Size(1254, 277);
+            DatosVentas.Size = new Size(1097, 208);
             DatosVentas.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Times New Roman", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.FromArgb(64, 64, 64);
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(236, 38);
-            label1.TabIndex = 1;
-            label1.Text = "Lista de Ventas";
-            // 
-            // btnNuevo
-            // 
-            btnNuevo.BackColor = Color.Green;
-            btnNuevo.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = SystemColors.ButtonHighlight;
-            btnNuevo.Location = new Point(1090, 12);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(166, 47);
-            btnNuevo.TabIndex = 2;
-            btnNuevo.Text = "+Nueva Venta";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += Venta_Click;
             // 
             // Id
             // 
@@ -97,7 +74,7 @@ namespace presentación
             Id.MinimumWidth = 6;
             Id.Name = "Id";
             Id.ReadOnly = true;
-            Id.Width = 53;
+            Id.Width = 43;
             // 
             // Cliente
             // 
@@ -106,7 +83,7 @@ namespace presentación
             Cliente.MinimumWidth = 6;
             Cliente.Name = "Cliente";
             Cliente.ReadOnly = true;
-            Cliente.Width = 84;
+            Cliente.Width = 69;
             // 
             // Rival
             // 
@@ -115,7 +92,7 @@ namespace presentación
             Rival.MinimumWidth = 6;
             Rival.Name = "Rival";
             Rival.ReadOnly = true;
-            Rival.Width = 70;
+            Rival.Width = 57;
             // 
             // Fecha
             // 
@@ -124,7 +101,7 @@ namespace presentación
             Fecha.MinimumWidth = 6;
             Fecha.Name = "Fecha";
             Fecha.ReadOnly = true;
-            Fecha.Width = 76;
+            Fecha.Width = 63;
             // 
             // Hora
             // 
@@ -133,7 +110,7 @@ namespace presentación
             Hora.MinimumWidth = 6;
             Hora.Name = "Hora";
             Hora.ReadOnly = true;
-            Hora.Width = 71;
+            Hora.Width = 58;
             // 
             // PartidoActivo
             // 
@@ -142,7 +119,7 @@ namespace presentación
             PartidoActivo.MinimumWidth = 6;
             PartidoActivo.Name = "PartidoActivo";
             PartidoActivo.ReadOnly = true;
-            PartidoActivo.Width = 80;
+            PartidoActivo.Width = 66;
             // 
             // IdLocalidad
             // 
@@ -151,7 +128,7 @@ namespace presentación
             IdLocalidad.MinimumWidth = 6;
             IdLocalidad.Name = "IdLocalidad";
             IdLocalidad.ReadOnly = true;
-            IdLocalidad.Width = 120;
+            IdLocalidad.Width = 96;
             // 
             // Localidad
             // 
@@ -160,7 +137,7 @@ namespace presentación
             Localidad.MinimumWidth = 6;
             Localidad.Name = "Localidad";
             Localidad.ReadOnly = true;
-            Localidad.Width = 103;
+            Localidad.Width = 83;
             // 
             // Vendedor
             // 
@@ -169,7 +146,7 @@ namespace presentación
             Vendedor.MinimumWidth = 6;
             Vendedor.Name = "Vendedor";
             Vendedor.ReadOnly = true;
-            Vendedor.Width = 102;
+            Vendedor.Width = 82;
             // 
             // Cantidad
             // 
@@ -178,7 +155,7 @@ namespace presentación
             Cantidad.MinimumWidth = 6;
             Cantidad.Name = "Cantidad";
             Cantidad.ReadOnly = true;
-            Cantidad.Width = 98;
+            Cantidad.Width = 80;
             // 
             // FechaVenta
             // 
@@ -187,7 +164,7 @@ namespace presentación
             FechaVenta.MinimumWidth = 6;
             FechaVenta.Name = "FechaVenta";
             FechaVenta.ReadOnly = true;
-            FechaVenta.Width = 113;
+            FechaVenta.Width = 92;
             // 
             // MontoTotal
             // 
@@ -196,7 +173,7 @@ namespace presentación
             MontoTotal.MinimumWidth = 6;
             MontoTotal.Name = "MontoTotal";
             MontoTotal.ReadOnly = true;
-            MontoTotal.Width = 119;
+            MontoTotal.Width = 96;
             // 
             // TipoVenta
             // 
@@ -205,20 +182,46 @@ namespace presentación
             TipoVenta.MinimumWidth = 6;
             TipoVenta.Name = "TipoVenta";
             TipoVenta.ReadOnly = true;
-            TipoVenta.Width = 109;
+            TipoVenta.Width = 87;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Times New Roman", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(64, 64, 64);
+            label1.Location = new Point(10, 7);
+            label1.Name = "label1";
+            label1.Size = new Size(193, 31);
+            label1.TabIndex = 1;
+            label1.Text = "Lista de Ventas";
+            // 
+            // btnNuevo
+            // 
+            btnNuevo.BackColor = Color.Green;
+            btnNuevo.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNuevo.ForeColor = SystemColors.ButtonHighlight;
+            btnNuevo.Location = new Point(954, 9);
+            btnNuevo.Margin = new Padding(3, 2, 3, 2);
+            btnNuevo.Name = "btnNuevo";
+            btnNuevo.Size = new Size(145, 35);
+            btnNuevo.TabIndex = 2;
+            btnNuevo.Text = "+Nueva Venta";
+            btnNuevo.UseVisualStyleBackColor = false;
+            btnNuevo.Click += Venta_Click;
             // 
             // ListadoVentas
             // 
-            Load += ListadoVentas_Load;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1257, 348);
+            ClientSize = new Size(1100, 261);
             Controls.Add(btnNuevo);
             Controls.Add(label1);
             Controls.Add(DatosVentas);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ListadoVentas";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "ListadoVentas";
+            Load += ListadoVentas_Load;
             ((System.ComponentModel.ISupportInitialize)DatosVentas).EndInit();
             ResumeLayout(false);
             PerformLayout();

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Entidades;
-using LogicaNegocios;
 
 namespace BibliotecaCliente.Presentacion
 {
@@ -32,44 +31,44 @@ namespace BibliotecaCliente.Presentacion
 
         private void CargarVentasCliente()
         {
-            try
-            {
-                var logicaVenta = new LogicaVenta();
-                var ventasCliente = logicaVenta.ObtenerVentas()
-                    .Where(v => v.Cliente != null &&
-                                string.Equals(v.Cliente.Identificacion, identificacionCliente, StringComparison.OrdinalIgnoreCase))
-                    .OrderByDescending(v => v.FechaVenta)
-                    .ToList();
+            //try
+            //{
+            //    var logicaVenta = new LogicaVenta();
+            //    var ventasCliente = logicaVenta.ObtenerVentas()
+            //        .Where(v => v.Cliente != null &&
+            //                    string.Equals(v.Cliente.Identificacion, identificacionCliente, StringComparison.OrdinalIgnoreCase))
+            //        .OrderByDescending(v => v.FechaVenta)
+            //        .ToList();
 
-                dataGridView1.Rows.Clear();
+            //    dataGridView1.Rows.Clear();
 
-                foreach (var venta in ventasCliente)
-                {
-                    string nombreVendedor = string.Empty;
-                    if (venta.Vendedor != null)
-                    {
-                        nombreVendedor = $"{venta.Vendedor.Nombre} {venta.Vendedor.Apellido}".Trim();
-                    }
+            //    foreach (var venta in ventasCliente)
+            //    {
+            //        string nombreVendedor = string.Empty;
+            //        if (venta.Vendedor != null)
+            //        {
+            //            nombreVendedor = $"{venta.Vendedor.Nombre} {venta.Vendedor.Apellido}".Trim();
+            //        }
 
-                    dataGridView1.Rows.Add(
-                        venta.IdVenta,
-                        venta.Partido?.Rival ?? string.Empty,
-                        venta.Partido?.Fecha.ToShortDateString() ?? string.Empty,
-                        venta.Partido?.Hora ?? string.Empty,
-                        venta.Partido != null && venta.Partido.Activo ? "Activo" : "Inactivo",
-                        venta.Localidad?.IdLocalidad ?? 0,
-                        venta.Localidad?.NombreLocalidad ?? string.Empty,
-                        nombreVendedor,
-                        venta.Cantidad,
-                        venta.FechaVenta.ToShortDateString(),
-                        venta.TipoVenta ?? string.Empty
-                    );
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"No se pudieron cargar las ventas del cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //        dataGridView1.Rows.Add(
+            //            venta.IdVenta,
+            //            venta.Partido?.Rival ?? string.Empty,
+            //            venta.Partido?.Fecha.ToShortDateString() ?? string.Empty,
+            //            venta.Partido?.Hora ?? string.Empty,
+            //            venta.Partido != null && venta.Partido.Activo ? "Activo" : "Inactivo",
+            //            venta.Localidad?.IdLocalidad ?? 0,
+            //            venta.Localidad?.NombreLocalidad ?? string.Empty,
+            //            nombreVendedor,
+            //            venta.Cantidad,
+            //            venta.FechaVenta.ToShortDateString(),
+            //            venta.TipoVenta ?? string.Empty
+            //        );
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"No se pudieron cargar las ventas del cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private void btNueva_Click(object sender, EventArgs e)

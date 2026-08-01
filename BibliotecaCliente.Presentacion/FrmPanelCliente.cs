@@ -22,9 +22,9 @@ namespace BibliotecaCliente.Presentacion
         {
             InitializeComponent();
             this.identificacionCliente = identificacionCliente ?? string.Empty;
-            labelUser.Text = string.IsNullOrWhiteSpace(this.identificacionCliente)
-                ? "Usuario"
-                : this.identificacionCliente;
+            
+            // Cargar y mostrar el nombre del cliente
+            CargarNombreCliente();
 
             // Agregar manejador de evento para cerrar la conexión al salir
             this.FormClosing += FrmPanelCliente_FormClosing;
@@ -38,6 +38,34 @@ namespace BibliotecaCliente.Presentacion
             if (!string.IsNullOrWhiteSpace(identificacionCliente))
             {
                 ClienteTCP.Desconectar(identificacionCliente);
+            }
+        }
+
+        private void CargarNombreCliente()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(identificacionCliente))
+                {
+                    labelUser.Text = "Usuario";
+                    return;
+                }
+
+                var cliente = ClienteTCP.ObtenerClientePorIdentificacion(identificacionCliente);
+                
+                if (cliente != null)
+                {
+                    labelUser.Text = $"{cliente.Nombre} {cliente.Apellido}".Trim();
+                }
+                else
+                {
+                    labelUser.Text = identificacionCliente;
+                }
+            }
+            catch (Exception)
+            {
+                // Si hay error, mostrar al menos la identificación
+                labelUser.Text = identificacionCliente;
             }
         }
 

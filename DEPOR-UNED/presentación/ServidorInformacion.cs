@@ -106,6 +106,11 @@ namespace presentación
                     ObtenerVentasCliente(identificacionVentas, ref servidorStreamWriter);
                     break;
 
+                case "ObtenerClientePorIdentificacion":
+                    var identificacionBuscar = (string)entidad;
+                    ObtenerClientePorIdentificacion(identificacionBuscar, ref servidorStreamWriter);
+                    break;
+
                 case "ObtenerPartidos":
                     ObtenerPartidos(ref servidorStreamWriter);
                     break;
@@ -202,6 +207,35 @@ namespace presentación
             {
                 EnviarRespuesta("[]", ref servidorStreamWriter);
                 MessageBox.Show($"Error al obtener ventas del cliente: {ex.Message}", "Error");
+            }
+        }
+
+        private void ObtenerClientePorIdentificacion(string identificacion, ref StreamWriter servidorStreamWriter)
+        {
+            try
+            {
+                var clientes = logicaCliente.ObtenerClientes();
+                var cliente = clientes.FirstOrDefault(c => 
+                    string.Equals(c.Identificacion, identificacion, StringComparison.OrdinalIgnoreCase));
+
+                if (cliente != null)
+                {
+                    var respuesta = JsonConvert.SerializeObject(cliente);
+                    EnviarRespuesta(respuesta, ref servidorStreamWriter);
+                    txtBitacora.Invoke(modificarTextotxtBitacora, 
+                        new object[] { $"Cliente encontrado: {cliente.Nombre} {cliente.Apellido}" });
+                }
+                else
+                {
+                    EnviarRespuesta("null", ref servidorStreamWriter);
+                    txtBitacora.Invoke(modificarTextotxtBitacora, 
+                        new object[] { $"Cliente no encontrado: {identificacion}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                EnviarRespuesta("null", ref servidorStreamWriter);
+                MessageBox.Show($"Error al obtener cliente: {ex.Message}", "Error");
             }
         }
 

@@ -201,6 +201,42 @@ namespace BibliotecaCliente.Presentacion
             }
         }
 
+        public static Cliente ObtenerClientePorIdentificacion(string identificacionCliente)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(identificacionCliente))
+                {
+                    return null;
+                }
+
+                if (cliente == null || !cliente.Connected)
+                {
+                    return null;
+                }
+
+                MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
+                {
+                    Metodo = "ObtenerClientePorIdentificacion",
+                    Entidad = identificacionCliente.Trim()
+                };
+
+                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
+                
+                if (string.IsNullOrWhiteSpace(respuesta) || respuesta == "null")
+                {
+                    return null;
+                }
+
+                var clienteObj = JsonConvert.DeserializeObject<Cliente>(respuesta);
+                return clienteObj;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public static List<Partido> ObtenerPartidos()
         {
             try

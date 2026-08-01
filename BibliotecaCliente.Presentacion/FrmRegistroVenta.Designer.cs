@@ -33,22 +33,22 @@
             Label label3;
             label1 = new Label();
             panel1 = new Panel();
-            panel2 = new Panel();
-            textBox3 = new TextBox();
-            btnCalcular = new Button();
+            btnLimpiar = new Button();
             btnGuardar = new Button();
             btnSalir = new Button();
-            btnLimpiar = new Button();
-            comboLocalidad = new ComboBox();
+            btnCalcular = new Button();
+            panel2 = new Panel();
             comboPartido = new ComboBox();
+            comboLocalidad = new ComboBox();
+            txtCantidad = new TextBox();
             panel3 = new Panel();
-            label4 = new Label();
-            labelCan = new Label();
-            label5 = new Label();
-            label6 = new Label();
-            labelCantidad = new Label();
-            labelPrecio = new Label();
             labelTotal = new Label();
+            labelPrecio = new Label();
+            labelCantidad = new Label();
+            label6 = new Label();
+            label5 = new Label();
+            labelCan = new Label();
+            label4 = new Label();
             labelPartido = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -56,41 +56,6 @@
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(204, -1);
-            label1.Name = "label1";
-            label1.Size = new Size(251, 31);
-            label1.TabIndex = 0;
-            label1.Text = "Registrar Nueva Venta";
-            label1.Click += label1_Click;
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(btnLimpiar);
-            panel1.Controls.Add(btnGuardar);
-            panel1.Controls.Add(btnSalir);
-            panel1.Controls.Add(btnCalcular);
-            panel1.Location = new Point(11, 288);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(677, 68);
-            panel1.TabIndex = 3;
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(comboPartido);
-            panel2.Controls.Add(comboLocalidad);
-            panel2.Controls.Add(textBox3);
-            panel2.Controls.Add(label3);
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(labelPartido);
-            panel2.Location = new Point(12, 46);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(508, 215);
-            panel2.TabIndex = 4;
             // 
             // labelPartido
             // 
@@ -122,24 +87,39 @@
             label3.TabIndex = 2;
             label3.Text = "Cantidad:";
             // 
-            // textBox3
+            // label1
             // 
-            textBox3.Location = new Point(171, 145);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(299, 27);
-            textBox3.TabIndex = 5;
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(204, -1);
+            label1.Name = "label1";
+            label1.Size = new Size(251, 31);
+            label1.TabIndex = 0;
+            label1.Text = "Registrar Nueva Venta";
             // 
-            // btnCalcular
+            // panel1
             // 
-            btnCalcular.BackColor = Color.FromArgb(102, 51, 153);
-            btnCalcular.FlatStyle = FlatStyle.Flat;
-            btnCalcular.ForeColor = Color.White;
-            btnCalcular.Location = new Point(3, 19);
-            btnCalcular.Name = "btnCalcular";
-            btnCalcular.Size = new Size(163, 40);
-            btnCalcular.TabIndex = 19;
-            btnCalcular.Text = "  Calcular";
-            btnCalcular.UseVisualStyleBackColor = false;
+            panel1.Controls.Add(btnLimpiar);
+            panel1.Controls.Add(btnGuardar);
+            panel1.Controls.Add(btnSalir);
+            panel1.Controls.Add(btnCalcular);
+            panel1.Location = new Point(11, 288);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(677, 68);
+            panel1.TabIndex = 3;
+            // 
+            // btnLimpiar
+            // 
+            btnLimpiar.BackColor = Color.FromArgb(255, 152, 0);
+            btnLimpiar.FlatStyle = FlatStyle.Flat;
+            btnLimpiar.ForeColor = Color.White;
+            btnLimpiar.Location = new Point(351, 19);
+            btnLimpiar.Name = "btnLimpiar";
+            btnLimpiar.Size = new Size(158, 40);
+            btnLimpiar.TabIndex = 23;
+            btnLimpiar.Text = "  Limpiar";
+            btnLimpiar.UseVisualStyleBackColor = false;
+            btnLimpiar.Click += btnLimpiar_Click;
             // 
             // btnGuardar
             // 
@@ -165,18 +145,40 @@
             btnSalir.Text = "  Salir";
             btnSalir.UseVisualStyleBackColor = false;
             // 
-            // btnLimpiar
+            // btnCalcular
             // 
-            btnLimpiar.BackColor = Color.FromArgb(255, 152, 0);
-            btnLimpiar.FlatStyle = FlatStyle.Flat;
-            btnLimpiar.ForeColor = Color.White;
-            btnLimpiar.Location = new Point(351, 19);
-            btnLimpiar.Name = "btnLimpiar";
-            btnLimpiar.Size = new Size(158, 40);
-            btnLimpiar.TabIndex = 23;
-            btnLimpiar.Text = "  Limpiar";
-            btnLimpiar.UseVisualStyleBackColor = false;
-            btnLimpiar.Click += btnLimpiar_Click;
+            btnCalcular.BackColor = Color.FromArgb(102, 51, 153);
+            btnCalcular.FlatStyle = FlatStyle.Flat;
+            btnCalcular.ForeColor = Color.White;
+            btnCalcular.Location = new Point(3, 19);
+            btnCalcular.Name = "btnCalcular";
+            btnCalcular.Size = new Size(163, 40);
+            btnCalcular.TabIndex = 19;
+            btnCalcular.Text = "  Calcular";
+            btnCalcular.UseVisualStyleBackColor = false;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(comboPartido);
+            panel2.Controls.Add(comboLocalidad);
+            panel2.Controls.Add(txtCantidad);
+            panel2.Controls.Add(label3);
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(labelPartido);
+            panel2.Location = new Point(12, 46);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(508, 215);
+            panel2.TabIndex = 4;
+            // 
+            // comboPartido
+            // 
+            comboPartido.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboPartido.FormattingEnabled = true;
+            comboPartido.Items.AddRange(new object[] { "Seleccione partido" });
+            comboPartido.Location = new Point(171, 24);
+            comboPartido.Name = "comboPartido";
+            comboPartido.Size = new Size(299, 28);
+            comboPartido.TabIndex = 7;
             // 
             // comboLocalidad
             // 
@@ -188,15 +190,12 @@
             comboLocalidad.Size = new Size(299, 28);
             comboLocalidad.TabIndex = 6;
             // 
-            // comboPartido
+            // txtCantidad
             // 
-            comboPartido.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboPartido.FormattingEnabled = true;
-            comboPartido.Items.AddRange(new object[] { "Seleccione partido" });
-            comboPartido.Location = new Point(171, 24);
-            comboPartido.Name = "comboPartido";
-            comboPartido.Size = new Size(299, 28);
-            comboPartido.TabIndex = 7;
+            txtCantidad.Location = new Point(171, 145);
+            txtCantidad.Name = "txtCantidad";
+            txtCantidad.Size = new Size(299, 27);
+            txtCantidad.TabIndex = 5;
             // 
             // panel3
             // 
@@ -212,52 +211,14 @@
             panel3.Size = new Size(163, 218);
             panel3.TabIndex = 5;
             // 
-            // label4
+            // labelTotal
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(40, 11);
-            label4.Name = "label4";
-            label4.Size = new Size(69, 20);
-            label4.TabIndex = 0;
-            label4.Text = "Resumen";
-            // 
-            // labelCan
-            // 
-            labelCan.AutoSize = true;
-            labelCan.Location = new Point(16, 42);
-            labelCan.Name = "labelCan";
-            labelCan.Size = new Size(72, 20);
-            labelCan.TabIndex = 1;
-            labelCan.Text = "Cantidad:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(16, 87);
-            label5.Name = "label5";
-            label5.Size = new Size(53, 20);
-            label5.TabIndex = 2;
-            label5.Text = "Precio:";
-            label5.Click += label5_Click;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(16, 131);
-            label6.Name = "label6";
-            label6.Size = new Size(45, 20);
-            label6.TabIndex = 3;
-            label6.Text = "Total:";
-            label6.Click += label6_Click;
-            // 
-            // labelCantidad
-            // 
-            labelCantidad.AutoSize = true;
-            labelCantidad.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelCantidad.Location = new Point(94, 41);
-            labelCantidad.Name = "labelCantidad";
-            labelCantidad.Size = new Size(0, 20);
-            labelCantidad.TabIndex = 4;
+            labelTotal.AutoSize = true;
+            labelTotal.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelTotal.Location = new Point(65, 131);
+            labelTotal.Name = "labelTotal";
+            labelTotal.Size = new Size(0, 20);
+            labelTotal.TabIndex = 6;
             // 
             // labelPrecio
             // 
@@ -268,14 +229,50 @@
             labelPrecio.Size = new Size(0, 20);
             labelPrecio.TabIndex = 5;
             // 
-            // labelTotal
+            // labelCantidad
             // 
-            labelTotal.AutoSize = true;
-            labelTotal.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelTotal.Location = new Point(65, 131);
-            labelTotal.Name = "labelTotal";
-            labelTotal.Size = new Size(0, 20);
-            labelTotal.TabIndex = 6;
+            labelCantidad.AutoSize = true;
+            labelCantidad.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelCantidad.Location = new Point(94, 41);
+            labelCantidad.Name = "labelCantidad";
+            labelCantidad.Size = new Size(0, 20);
+            labelCantidad.TabIndex = 4;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(16, 131);
+            label6.Name = "label6";
+            label6.Size = new Size(45, 20);
+            label6.TabIndex = 3;
+            label6.Text = "Total:";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(16, 87);
+            label5.Name = "label5";
+            label5.Size = new Size(53, 20);
+            label5.TabIndex = 2;
+            label5.Text = "Precio:";
+            // 
+            // labelCan
+            // 
+            labelCan.AutoSize = true;
+            labelCan.Location = new Point(16, 42);
+            labelCan.Name = "labelCan";
+            labelCan.Size = new Size(72, 20);
+            labelCan.TabIndex = 1;
+            labelCan.Text = "Cantidad:";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(40, 11);
+            label4.Name = "label4";
+            label4.Size = new Size(69, 20);
+            label4.TabIndex = 0;
+            label4.Text = "Resumen";
             // 
             // FrmRegistroVenta
             // 
@@ -308,7 +305,7 @@
         private Button btnGuardar;
         private Button btnSalir;
         private Button btnCalcular;
-        private TextBox textBox3;
+        private TextBox txtCantidad;
         private ComboBox comboPartido;
         private ComboBox comboLocalidad;
         private Panel panel3;

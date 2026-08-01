@@ -36,7 +36,7 @@ namespace BibliotecaCliente.Presentacion
                 clienteConectado = true;
                 MessageBox.Show("Conexión exitosa al servidor.", "Conexión establecida", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                FrmPanelCliente panelCliente = new FrmPanelCliente();
+                FrmPanelCliente panelCliente = new FrmPanelCliente(identificacion);
                 panelCliente.Show();
                 this.Hide();
             }

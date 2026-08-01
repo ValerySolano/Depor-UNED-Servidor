@@ -113,7 +113,7 @@
             IDLocalidad.MinimumWidth = 6;
             IDLocalidad.Name = "IDLocalidad";
             IDLocalidad.ReadOnly = true;
-            IDLocalidad.Width = 112;
+            IDLocalidad.Width = 122;
             // 
             // NombreLocalidad
             // 
@@ -145,7 +145,7 @@
             FechaCompra.MinimumWidth = 6;
             FechaCompra.Name = "FechaCompra";
             FechaCompra.ReadOnly = true;
-            FechaCompra.Width = 122;
+            FechaCompra.Width = 133;
             // 
             // TipoCompra
             // 
@@ -183,6 +183,7 @@
             btNueva.TabIndex = 3;
             btNueva.Text = "Nueva";
             btNueva.UseVisualStyleBackColor = true;
+            btNueva.Click += btNueva_Click;
             // 
             // FrmPanelCliente
             // 

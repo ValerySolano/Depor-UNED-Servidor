@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DEPOR-UNED\Entidades\Entidades.csproj" />
+    <ProjectReference Include="..\DEPOR-UNED\LogicaNegocios\LogicaNegocios.csproj" />
   </ItemGroup>
 
   <ItemGroup>

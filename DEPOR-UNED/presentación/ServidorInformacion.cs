@@ -130,6 +130,21 @@ namespace presentación
                     }
                     break;
 
+                case "AgregarVenta":
+                    try
+                    {
+                        var jsonVenta = JsonConvert.SerializeObject(entidad);
+                        var venta = JsonConvert.DeserializeObject<Venta>(jsonVenta);
+                        AgregarVenta(venta, ref servidorStreamWriter);
+                    }
+                    catch (Exception ex)
+                    {
+                        EnviarRespuesta($"ERROR: {ex.Message}", ref servidorStreamWriter);
+                        txtBitacora.Invoke(modificarTextotxtBitacora, 
+                            new object[] { $"Error al agregar venta: {ex.Message}" });
+                    }
+                    break;
+
                 case "Desconectar":
                     Desconectar((string)entidad);
                     // var entidadAutor= JsonConvert.DeserializeObject<Autor>(JsonConvert.SerializeObject(entidad));
@@ -262,6 +277,74 @@ namespace presentación
                 MessageBox.Show($"Error al verificar disponibilidad: {ex.Message}", "Error");
             }
         }
+
+        private void AgregarVenta(Venta venta, ref StreamWriter servidorStreamWriter)
+        {
+            try
+            {
+                // Buscar el cliente real por su identificación
+                var clientes = logicaCliente.ObtenerClientes();
+                var clienteReal = clientes.FirstOrDefault(c => 
+                    string.Equals(c.Identificacion, venta.Cliente.Identificacion, StringComparison.OrdinalIgnoreCase));
+
+                if (clienteReal == null)
+                {
+                    EnviarRespuesta("ERROR: Cliente no encontrado", ref servidorStreamWriter);
+                    return;
+                }
+
+                // Buscar el partido real
+                var partidos = logicaPartido.ObtenerPartidos();
+                var partidoReal = partidos.FirstOrDefault(p => p.IdPartido == venta.Partido.IdPartido);
+
+                if (partidoReal == null)
+                {
+                    EnviarRespuesta("ERROR: Partido no encontrado", ref servidorStreamWriter);
+                    return;
+                }
+
+                // Buscar la localidad real
+                var localidades = logicaLocalidad.ObtenerLocalidades();
+                var localidadReal = localidades.FirstOrDefault(l => l.IdLocalidad == venta.Localidad.IdLocalidad);
+
+                if (localidadReal == null)
+                {
+                    EnviarRespuesta("ERROR: Localidad no encontrada", ref servidorStreamWriter);
+                    return;
+                }
+
+                // Obtener el siguiente ID de venta (auto-incremental)
+                var ventasExistentes = logicaVenta.ObtenerVentas();
+                int nuevoIdVenta = ventasExistentes.Length > 0 ? ventasExistentes.Max(v => v.IdVenta) + 1 : 1;
+
+                // Crear la venta con los datos completos
+                var ventaCompleta = new Venta(
+                    nuevoIdVenta,
+                    clienteReal,
+                    partidoReal,
+                    localidadReal,
+                    venta.Cantidad,
+                    null, // Sin vendedor para ventas en línea
+                    venta.FechaVenta,
+                    venta.MontoTotal,
+                    venta.TipoVenta
+                );
+
+                // Validar y agregar la venta usando la lógica de negocio
+                logicaVenta.AgregarVenta(ventaCompleta);
+                
+                EnviarRespuesta("OK", ref servidorStreamWriter);
+                txtBitacora.Invoke(modificarTextotxtBitacora, 
+                    new object[] { $"Venta agregada exitosamente: Cliente {clienteReal.Identificacion}, Partido {partidoReal.Rival}, Monto: ₡{venta.MontoTotal:N2}" });
+            }
+            catch (Exception ex)
+            {
+                EnviarRespuesta($"ERROR: {ex.Message}", ref servidorStreamWriter);
+                txtBitacora.Invoke(modificarTextotxtBitacora, 
+                    new object[] { $"Error al agregar venta: {ex.Message}" });
+            }
+        }
+
         private void Conectar(string pIdentificadorCliente)
        { 
             txtBitacora.Invoke(modificarTextotxtBitacora, new object[] { pIdentificadorCliente + "se ha conectado..." });

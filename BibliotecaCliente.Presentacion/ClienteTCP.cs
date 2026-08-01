@@ -300,5 +300,35 @@ namespace BibliotecaCliente.Presentacion
                 return new { disponible = false, cantidadDisponible = 0, precio = 0m };
             }
         }
+
+        public static bool AgregarVenta(Venta venta)
+        {
+            try
+            {
+                if (cliente == null || !cliente.Connected)
+                {
+                    throw new Exception("No hay conexión con el servidor");
+                }
+
+                MensajeSocket<Venta> mensajeSocket = new MensajeSocket<Venta>
+                {
+                    Metodo = "AgregarVenta",
+                    Entidad = venta
+                };
+
+                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
+
+                if (respuesta.StartsWith("ERROR:"))
+                {
+                    throw new Exception(respuesta.Replace("ERROR: ", ""));
+                }
+
+                return respuesta == "OK";
+            }
+            catch (Exception)
+            {
+                throw; // Re-lanzar la excepción para que sea capturada en el formulario
+            }
+        }
     }
 }

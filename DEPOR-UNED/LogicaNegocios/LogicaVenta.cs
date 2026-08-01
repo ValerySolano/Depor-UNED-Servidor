@@ -87,10 +87,21 @@ namespace LogicaNegocios
                 throw new ArgumentException("Localidad inválida o no registrada.");
             }
 
-            // Valida existencia y registro del vendedor asociado.
-            if (venta.Vendedor == null || repositorioVendedores.ObtenerPorId(venta.Vendedor.IdVendedor) == null)
+            // Valida existencia y registro del vendedor asociado solo si no es una venta en línea.
+            if (venta.TipoVenta != "En Línea" && venta.TipoVenta != "En Linea")
             {
-                throw new ArgumentException("Vendedor inválido o no registrado.");
+                if (venta.Vendedor == null || repositorioVendedores.ObtenerPorId(venta.Vendedor.IdVendedor) == null)
+                {
+                    throw new ArgumentException("Vendedor inválido o no registrado.");
+                }
+            }
+            else
+            {
+                // Para ventas en línea, el vendedor debe ser null
+                if (venta.Vendedor != null)
+                {
+                    throw new ArgumentException("Las ventas en línea no deben tener un vendedor asignado.");
+                }
             }
 
             // La cantidad de boletos vendida debe ser mayor que cero.

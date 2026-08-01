@@ -169,13 +169,56 @@ namespace BibliotecaCliente.Presentacion
                     return;
                 }
 
-                // Aquí iría la lógica para guardar la venta
-                MessageBox.Show("La funcionalidad de guardar será implementada cuando se configure el método TCP en el servidor.", 
-                    "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Obtener los datos seleccionados
+                var partidoSeleccionado = partidos[comboPartido.SelectedIndex - 1];
+                var localidadSeleccionada = localidades[comboLocalidad.SelectedIndex - 1];
+                int cantidad = int.Parse(txtCantidad.Text);
+                decimal precioUnitario = decimal.Parse(labelPrecio.Text.Replace("₡", "").Replace(",", ""));
+                decimal montoTotal = decimal.Parse(labelTotal.Text.Replace("₡", "").Replace(",", ""));
+
+                // Crear objeto cliente simplificado (solo con identificación para búsqueda en servidor)
+                var cliente = new Cliente(
+                    0, // IdCliente temporal (será resuelto en el servidor)
+                    identificacionCliente,
+                    "", "", // Nombre y apellido vacíos (serán completados en el servidor)
+                    DateTime.Now,
+                    DateTime.Now,
+                    true
+                );
+
+                // Crear la venta sin vendedor (venta en línea)
+                var venta = new Venta(
+                    0, // IdVenta se asignará automáticamente en el servidor
+                    cliente,
+                    partidoSeleccionado,
+                    localidadSeleccionada,
+                    cantidad,
+                    null, // Sin vendedor para ventas en línea
+                    DateTime.Now,
+                    montoTotal,
+                    "En Línea"
+                );
+
+                // Enviar la venta al servidor
+                bool resultado = ClienteTCP.AgregarVenta(venta);
+
+                if (resultado)
+                {
+                    MessageBox.Show("¡Venta registrada exitosamente!", 
+                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    // Limpiar el formulario
+                    btnLimpiar_Click(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo registrar la venta. Por favor intente nuevamente.", 
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al guardar la venta:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

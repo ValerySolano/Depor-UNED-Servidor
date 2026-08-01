@@ -88,76 +88,81 @@
             panelMain.Controls.Add(btnGuardar);
             panelMain.Controls.Add(btnLimpiar);
             panelMain.Controls.Add(btnSalir);
-            panelMain.Location = new Point(20, 12);
+            panelMain.Location = new Point(18, 9);
+            panelMain.Margin = new Padding(3, 2, 3, 2);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(678, 393);
+            panelMain.Size = new Size(593, 295);
             panelMain.TabIndex = 1;
             // 
             // dateTimeHora
             // 
             dateTimeHora.Format = DateTimePickerFormat.Time;
-            dateTimeHora.Location = new Point(127, 208);
+            dateTimeHora.Location = new Point(111, 156);
+            dateTimeHora.Margin = new Padding(3, 2, 3, 2);
             dateTimeHora.Name = "dateTimeHora";
-            dateTimeHora.Size = new Size(223, 27);
+            dateTimeHora.Size = new Size(196, 23);
             dateTimeHora.TabIndex = 21;
             // 
             // checkBoxActivo
             // 
-            checkBoxActivo.Location = new Point(127, 271);
+            checkBoxActivo.Location = new Point(111, 203);
+            checkBoxActivo.Margin = new Padding(3, 2, 3, 2);
             checkBoxActivo.Name = "checkBoxActivo";
-            checkBoxActivo.Size = new Size(20, 20);
+            checkBoxActivo.Size = new Size(18, 15);
             checkBoxActivo.TabIndex = 18;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(52, 271);
+            label1.Location = new Point(46, 203);
             label1.Name = "label1";
-            label1.Size = new Size(54, 20);
+            label1.Size = new Size(44, 15);
             label1.TabIndex = 17;
             label1.Text = "Activo:";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(52, 208);
+            label7.Location = new Point(46, 156);
             label7.Name = "label7";
-            label7.Size = new Size(45, 20);
+            label7.Size = new Size(36, 15);
             label7.TabIndex = 16;
             label7.Text = "Hora:";
             // 
             // dateTimePickerNacimiento
             // 
             dateTimePickerNacimiento.Format = DateTimePickerFormat.Short;
-            dateTimePickerNacimiento.Location = new Point(127, 161);
+            dateTimePickerNacimiento.Location = new Point(111, 121);
+            dateTimePickerNacimiento.Margin = new Padding(3, 2, 3, 2);
             dateTimePickerNacimiento.Name = "dateTimePickerNacimiento";
-            dateTimePickerNacimiento.Size = new Size(223, 27);
+            dateTimePickerNacimiento.Size = new Size(196, 23);
             dateTimePickerNacimiento.TabIndex = 15;
             // 
             // titleLabel
             // 
             titleLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             titleLabel.ForeColor = Color.FromArgb(3, 78, 162);
-            titleLabel.Location = new Point(20, 16);
+            titleLabel.Location = new Point(18, 12);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(420, 28);
+            titleLabel.Size = new Size(368, 21);
             titleLabel.TabIndex = 0;
             titleLabel.Text = "REGISTRO DE PARTIDOS";
             // 
             // separator
             // 
             separator.BackColor = Color.FromArgb(3, 78, 162);
-            separator.Location = new Point(20, 52);
+            separator.Location = new Point(18, 39);
+            separator.Margin = new Padding(3, 2, 3, 2);
             separator.Name = "separator";
-            separator.Size = new Size(642, 10);
+            separator.Size = new Size(562, 8);
             separator.TabIndex = 1;
             // 
             // lblId
             // 
             lblId.AutoSize = true;
-            lblId.Location = new Point(36, 83);
+            lblId.Location = new Point(32, 62);
             lblId.Name = "lblId";
-            lblId.Size = new Size(76, 20);
+            lblId.Size = new Size(61, 15);
             lblId.TabIndex = 2;
             lblId.Text = "Id Partido:";
             // 
@@ -165,9 +170,10 @@
             // 
             idBorder.BackColor = Color.FromArgb(3, 78, 162);
             idBorder.Controls.Add(idInner);
-            idBorder.Location = new Point(130, 76);
+            idBorder.Location = new Point(114, 57);
+            idBorder.Margin = new Padding(3, 2, 3, 2);
             idBorder.Name = "idBorder";
-            idBorder.Size = new Size(220, 32);
+            idBorder.Size = new Size(192, 24);
             idBorder.TabIndex = 3;
             // 
             // idInner
@@ -175,24 +181,26 @@
             idInner.BackColor = Color.White;
             idInner.Controls.Add(textBoxId);
             idInner.Location = new Point(2, 2);
+            idInner.Margin = new Padding(3, 2, 3, 2);
             idInner.Name = "idInner";
-            idInner.Size = new Size(216, 28);
+            idInner.Size = new Size(189, 21);
             idInner.TabIndex = 0;
             // 
             // textBoxId
             // 
             textBoxId.BorderStyle = BorderStyle.None;
-            textBoxId.Location = new Point(6, 5);
+            textBoxId.Location = new Point(5, 4);
+            textBoxId.Margin = new Padding(3, 2, 3, 2);
             textBoxId.Name = "textBoxId";
-            textBoxId.Size = new Size(200, 20);
+            textBoxId.Size = new Size(175, 16);
             textBoxId.TabIndex = 0;
             // 
             // lblNombre
             // 
             lblNombre.AutoSize = true;
-            lblNombre.Location = new Point(52, 126);
+            lblNombre.Location = new Point(46, 94);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(44, 20);
+            lblNombre.Size = new Size(35, 15);
             lblNombre.TabIndex = 4;
             lblNombre.Text = "Rival:";
             // 
@@ -200,9 +208,10 @@
             // 
             nombreBorder.BackColor = Color.FromArgb(3, 78, 162);
             nombreBorder.Controls.Add(nombreInner);
-            nombreBorder.Location = new Point(127, 114);
+            nombreBorder.Location = new Point(111, 86);
+            nombreBorder.Margin = new Padding(3, 2, 3, 2);
             nombreBorder.Name = "nombreBorder";
-            nombreBorder.Size = new Size(223, 32);
+            nombreBorder.Size = new Size(195, 24);
             nombreBorder.TabIndex = 5;
             // 
             // nombreInner
@@ -210,24 +219,26 @@
             nombreInner.BackColor = Color.White;
             nombreInner.Controls.Add(textBoxNombre);
             nombreInner.Location = new Point(3, 2);
+            nombreInner.Margin = new Padding(3, 2, 3, 2);
             nombreInner.Name = "nombreInner";
-            nombreInner.Size = new Size(219, 28);
+            nombreInner.Size = new Size(192, 21);
             nombreInner.TabIndex = 0;
             // 
             // textBoxNombre
             // 
             textBoxNombre.BorderStyle = BorderStyle.None;
-            textBoxNombre.Location = new Point(0, 5);
+            textBoxNombre.Location = new Point(0, 4);
+            textBoxNombre.Margin = new Padding(3, 2, 3, 2);
             textBoxNombre.Name = "textBoxNombre";
-            textBoxNombre.Size = new Size(214, 20);
+            textBoxNombre.Size = new Size(187, 16);
             textBoxNombre.TabIndex = 1;
             // 
             // lblPrecio
             // 
             lblPrecio.AutoSize = true;
-            lblPrecio.Location = new Point(52, 161);
+            lblPrecio.Location = new Point(46, 121);
             lblPrecio.Name = "lblPrecio";
-            lblPrecio.Size = new Size(50, 20);
+            lblPrecio.Size = new Size(41, 15);
             lblPrecio.TabIndex = 6;
             lblPrecio.Text = "Fecha:";
             // 
@@ -235,17 +246,19 @@
             // 
             imageCard.BackColor = Color.FromArgb(245, 246, 250);
             imageCard.Controls.Add(pictureBox);
-            imageCard.Location = new Point(442, 76);
+            imageCard.Location = new Point(387, 57);
+            imageCard.Margin = new Padding(3, 2, 3, 2);
             imageCard.Name = "imageCard";
-            imageCard.Size = new Size(198, 196);
+            imageCard.Size = new Size(173, 147);
             imageCard.TabIndex = 9;
             // 
             // pictureBox
             // 
             pictureBox.Image = (Image)resources.GetObject("pictureBox.Image");
-            pictureBox.Location = new Point(15, 14);
+            pictureBox.Location = new Point(13, 10);
+            pictureBox.Margin = new Padding(3, 2, 3, 2);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(166, 161);
+            pictureBox.Size = new Size(145, 121);
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
@@ -255,9 +268,10 @@
             btnGuardar.BackColor = Color.FromArgb(40, 167, 69);
             btnGuardar.FlatStyle = FlatStyle.Flat;
             btnGuardar.ForeColor = Color.White;
-            btnGuardar.Location = new Point(95, 320);
+            btnGuardar.Location = new Point(83, 240);
+            btnGuardar.Margin = new Padding(3, 2, 3, 2);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(190, 48);
+            btnGuardar.Size = new Size(166, 36);
             btnGuardar.TabIndex = 11;
             btnGuardar.Text = "  Guardar";
             btnGuardar.UseVisualStyleBackColor = false;
@@ -268,9 +282,10 @@
             btnLimpiar.BackColor = Color.FromArgb(255, 152, 0);
             btnLimpiar.FlatStyle = FlatStyle.Flat;
             btnLimpiar.ForeColor = Color.White;
-            btnLimpiar.Location = new Point(340, 320);
+            btnLimpiar.Location = new Point(298, 240);
+            btnLimpiar.Margin = new Padding(3, 2, 3, 2);
             btnLimpiar.Name = "btnLimpiar";
-            btnLimpiar.Size = new Size(140, 48);
+            btnLimpiar.Size = new Size(122, 36);
             btnLimpiar.TabIndex = 12;
             btnLimpiar.Text = "  Limpiar";
             btnLimpiar.UseVisualStyleBackColor = false;
@@ -281,9 +296,10 @@
             btnSalir.BackColor = Color.FromArgb(220, 53, 69);
             btnSalir.FlatStyle = FlatStyle.Flat;
             btnSalir.ForeColor = Color.White;
-            btnSalir.Location = new Point(500, 320);
+            btnSalir.Location = new Point(438, 240);
+            btnSalir.Margin = new Padding(3, 2, 3, 2);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(140, 48);
+            btnSalir.Size = new Size(122, 36);
             btnSalir.TabIndex = 13;
             btnSalir.Text = "  Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -295,7 +311,7 @@
             dateTimePickerHora.Location = new Point(132, 204);
             dateTimePickerHora.Name = "dateTimePickerHora";
             dateTimePickerHora.ShowUpDown = true;
-            dateTimePickerHora.Size = new Size(100, 27);
+            dateTimePickerHora.Size = new Size(100, 23);
             dateTimePickerHora.TabIndex = 16;
             dateTimePickerHora.Value = new DateTime(2026, 6, 18, 20, 9, 39, 547);
             // 
@@ -322,12 +338,13 @@
             // 
             // RegistroPartidos
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(713, 401);
+            ClientSize = new Size(624, 301);
             Controls.Add(panelMain);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "RegistroPartidos";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "RegistroPartidos";
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();

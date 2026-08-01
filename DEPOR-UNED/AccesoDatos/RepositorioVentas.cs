@@ -49,7 +49,7 @@ SET IDENTITY_INSERT Venta OFF;";
             insertVenta.Parameters.AddWithValue("@IdPartido", venta.Partido.IdPartido);
             insertVenta.Parameters.AddWithValue("@IdLocalidad", venta.Localidad.IdLocalidad);
             insertVenta.Parameters.AddWithValue("@Cantidad", venta.Cantidad);
-            insertVenta.Parameters.AddWithValue("@IdVendedor", venta.Vendedor.IdVendedor);
+            insertVenta.Parameters.AddWithValue("@IdVendedor", (object?)venta.Vendedor?.IdVendedor ?? DBNull.Value);
             insertVenta.Parameters.AddWithValue("@FechaVenta", venta.FechaVenta);
             insertVenta.Parameters.AddWithValue("@MontoTotal", venta.MontoTotal);
             insertVenta.Parameters.AddWithValue("@TipoVenta", venta.TipoVenta);
@@ -96,7 +96,7 @@ FROM Venta v
 INNER JOIN Cliente c ON c.IdCliente = v.IdCliente
 INNER JOIN Partido p ON p.IdPartido = v.IdPartido
 INNER JOIN Localidad l ON l.IdLocalidad = v.IdLocalidad
-INNER JOIN Vendedor vd ON vd.IdVendedor = v.IdVendedor
+LEFT JOIN Vendedor vd ON vd.IdVendedor = v.IdVendedor
 ORDER BY v.IdVenta;";
 
             using var reader = command.ExecuteReader();
@@ -126,14 +126,19 @@ ORDER BY v.IdVenta;";
                     reader.GetDecimal(19)
                 );
 
-                var vendedor = new Vendedor(
-                    reader.GetInt32(20),
-                    reader.GetString(21),
-                    reader.GetString(22),
-                    reader.GetString(23),
-                    reader.GetDateTime(24),
-                    reader.GetDateTime(25)
-                );
+                // Vendedor puede ser null para ventas en línea
+                Vendedor? vendedor = null;
+                if (!reader.IsDBNull(20))
+                {
+                    vendedor = new Vendedor(
+                        reader.GetInt32(20),
+                        reader.GetString(21),
+                        reader.GetString(22),
+                        reader.GetString(23),
+                        reader.GetDateTime(24),
+                        reader.GetDateTime(25)
+                    );
+                }
 
                 ventas.Add(new Venta(
                     reader.GetInt32(0),

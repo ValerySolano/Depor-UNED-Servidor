@@ -20,6 +20,10 @@ namespace presentación
     {
         private readonly NegocioComunicacionTCP comunicacionTCP = new NegocioComunicacionTCP();
         private readonly LogicaCliente logicaCliente = new LogicaCliente();
+        private readonly LogicaVenta logicaVenta = new LogicaVenta();
+        private readonly LogicaPartido logicaPartido = new LogicaPartido();
+        private readonly LogicaLocalidad logicaLocalidad = new LogicaLocalidad();
+        private readonly LogicaLocalidadPartido logicaLocalidadPartido = new LogicaLocalidadPartido();
 
         private delegate void EscribirEnTextBoxDelegate(string texto);
         private delegate void ModificarListBoxDelegate(string texto, bool agregar);
@@ -38,19 +42,35 @@ namespace presentación
             // Maneja el mensaje recibido 
             try
             {
+                // Validar que el mensaje no sea null o vacío
+                if (string.IsNullOrWhiteSpace(e.mensaje))
+                {
+                    txtBitacora.Invoke(modificarTextotxtBitacora, 
+                        new object[] { "Se recibió un mensaje vacío o null. Ignorando..." });
+                    return;
+                }
+
                 var mensajeRecibido = JsonConvert.DeserializeObject<MensajeSocket<object>>(e.mensaje);
+                
+                // Validar que el objeto deserializado no sea null
+                if (mensajeRecibido == null)
+                {
+                    txtBitacora.Invoke(modificarTextotxtBitacora, 
+                        new object[] { "No se pudo deserializar el mensaje. Ignorando..." });
+                    return;
+                }
+
                 SeleccionarMetodo(mensajeRecibido.Metodo, mensajeRecibido.Entidad, ref e.streamWriter);
             }
-            catch (System.Text.Json.JsonException)
+            catch (System.Text.Json.JsonException ex)
             {
-                MessageBox.Show("No fue posible convertit el objeto.");
-                // Manejar el error de deserialización JSON si es necesario
+                MessageBox.Show($"No fue posible convertir el objeto: {ex.Message}");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No fue posible guardar los datos correctamente.", ex.Message);
+                MessageBox.Show($"Error al procesar mensaje: {ex.Message}\n\nDetalles: {ex.StackTrace}");
             }
-}
+        }
         public void SeleccionarMetodo(string pMetodo, object entidad, ref StreamWriter servidorStreamWriter)
         {
             switch (pMetodo)
@@ -64,9 +84,65 @@ namespace presentación
                     break;
                 case "ValidarIdentificacion":
                     var identificacionCliente = (string)entidad;
-                    bool existeIdentificacion = logicaCliente.ObtenerClientes()
-                        .Any(cliente => cliente.Identificacion == identificacionCliente);
-                    EnviarRespuesta(existeIdentificacion.ToString(), ref servidorStreamWriter);
+                    var clienteEncontrado = logicaCliente.ObtenerClientes()
+                        .FirstOrDefault(cliente => cliente.Identificacion == identificacionCliente);
+                    
+                    if (clienteEncontrado == null)
+                    {
+                        EnviarRespuesta("NOEXISTE", ref servidorStreamWriter);
+                    }
+                    else if (!clienteEncontrado.Activo)
+                    {
+                        EnviarRespuesta("INACTIVO", ref servidorStreamWriter);
+                    }
+                    else
+                    {
+                        EnviarRespuesta("VALIDO", ref servidorStreamWriter);
+                    }
+                    break;
+
+                case "ObtenerVentasCliente":
+                    var identificacionVentas = (string)entidad;
+                    ObtenerVentasCliente(identificacionVentas, ref servidorStreamWriter);
+                    break;
+
+                case "ObtenerPartidos":
+                    ObtenerPartidos(ref servidorStreamWriter);
+                    break;
+
+                case "ObtenerLocalidades":
+                    ObtenerLocalidades(ref servidorStreamWriter);
+                    break;
+
+                case "VerificarDisponibilidad":
+                    try
+                    {
+                        var jsonString = JsonConvert.SerializeObject(entidad);
+                        var datosVerificacion = JsonConvert.DeserializeObject<DatosVerificacionDisponibilidad>(jsonString);
+                        VerificarDisponibilidad(datosVerificacion.IdPartido, datosVerificacion.IdLocalidad, datosVerificacion.Cantidad, ref servidorStreamWriter);
+                    }
+                    catch (Exception ex)
+                    {
+                        var resultado = new { disponible = false, cantidadDisponible = 0, precio = 0 };
+                        EnviarRespuesta(JsonConvert.SerializeObject(resultado), ref servidorStreamWriter);
+                        txtBitacora.Invoke(modificarTextotxtBitacora, 
+                            new object[] { $"Error al verificar disponibilidad: {ex.Message}" });
+                    }
+                    break;
+
+                case "AgregarVenta":
+                    try
+                    {
+                        var jsonVenta = JsonConvert.SerializeObject(entidad);
+                        var venta = JsonConvert.DeserializeObject<Venta>(jsonVenta);
+                        AgregarVenta(venta, ref servidorStreamWriter);
+                    }
+                    catch (Exception ex)
+                    {
+                        EnviarRespuesta($"ERROR: {ex.Message}", ref servidorStreamWriter);
+                        txtBitacora.Invoke(modificarTextotxtBitacora, 
+                            new object[] { $"Error al agregar venta: {ex.Message}" });
+                    }
                     break;
 
                 case "Desconectar":
@@ -104,6 +180,171 @@ namespace presentación
                 MessageBox.Show("No fue posible enviar los datos correctamente.", ex.Message);
             }
         }
+
+        private void ObtenerVentasCliente(string identificacionCliente, ref StreamWriter servidorStreamWriter)
+        {
+            try
+            {
+                var todasLasVentas = logicaVenta.ObtenerVentas();
+                var ventasCliente = todasLasVentas
+                    .Where(v => v.Cliente != null && 
+                                string.Equals(v.Cliente.Identificacion, identificacionCliente, StringComparison.OrdinalIgnoreCase))
+                    .OrderByDescending(v => v.FechaVenta)
+                    .ToList();
+
+                var respuesta = JsonConvert.SerializeObject(ventasCliente);
+                EnviarRespuesta(respuesta, ref servidorStreamWriter);
+                
+                txtBitacora.Invoke(modificarTextotxtBitacora, 
+                    new object[] { $"Enviadas {ventasCliente.Count} ventas del cliente {identificacionCliente}" });
+            }
+            catch (Exception ex)
+            {
+                EnviarRespuesta("[]", ref servidorStreamWriter);
+                MessageBox.Show($"Error al obtener ventas del cliente: {ex.Message}", "Error");
+            }
+        }
+
+        private void ObtenerPartidos(ref StreamWriter servidorStreamWriter)
+        {
+            try
+            {
+                var partidos = logicaPartido.ObtenerPartidos()
+                    .Where(p => p.Activo)
+                    .ToList();
+                var respuesta = JsonConvert.SerializeObject(partidos);
+                EnviarRespuesta(respuesta, ref servidorStreamWriter);
+                txtBitacora.Invoke(modificarTextotxtBitacora, 
+                    new object[] { $"Enviados {partidos.Count} partidos activos" });
+            }
+            catch (Exception ex)
+            {
+                EnviarRespuesta("[]", ref servidorStreamWriter);
+                MessageBox.Show($"Error al obtener partidos: {ex.Message}", "Error");
+            }
+        }
+
+        private void ObtenerLocalidades(ref StreamWriter servidorStreamWriter)
+        {
+            try
+            {
+                var localidades = logicaLocalidad.ObtenerLocalidades().ToList();
+                var respuesta = JsonConvert.SerializeObject(localidades);
+                EnviarRespuesta(respuesta, ref servidorStreamWriter);
+                txtBitacora.Invoke(modificarTextotxtBitacora, 
+                    new object[] { $"Enviadas {localidades.Count} localidades" });
+            }
+            catch (Exception ex)
+            {
+                EnviarRespuesta("[]", ref servidorStreamWriter);
+                MessageBox.Show($"Error al obtener localidades: {ex.Message}", "Error");
+            }
+        }
+
+        private void VerificarDisponibilidad(int idPartido, int idLocalidad, int cantidad, ref StreamWriter servidorStreamWriter)
+        {
+            try
+            {
+                var localidadesPartido = logicaLocalidadPartido.ObtenerRegistros();
+                var localidadPartido = localidadesPartido.FirstOrDefault(lp => 
+                    lp.Partido.IdPartido == idPartido && lp.Localidad.IdLocalidad == idLocalidad);
+
+                if (localidadPartido != null && localidadPartido.CantidadDisponible >= cantidad)
+                {
+                    var resultado = new
+                    {
+                        disponible = true,
+                        cantidadDisponible = localidadPartido.CantidadDisponible,
+                        precio = localidadPartido.Localidad.Precio
+                    };
+                    EnviarRespuesta(JsonConvert.SerializeObject(resultado), ref servidorStreamWriter);
+                }
+                else
+                {
+                    var resultado = new
+                    {
+                        disponible = false,
+                        cantidadDisponible = localidadPartido?.CantidadDisponible ?? 0,
+                        precio = localidadPartido?.Localidad.Precio ?? 0
+                    };
+                    EnviarRespuesta(JsonConvert.SerializeObject(resultado), ref servidorStreamWriter);
+                }
+            }
+            catch (Exception ex)
+            {
+                var resultado = new { disponible = false, cantidadDisponible = 0, precio = 0 };
+                EnviarRespuesta(JsonConvert.SerializeObject(resultado), ref servidorStreamWriter);
+                MessageBox.Show($"Error al verificar disponibilidad: {ex.Message}", "Error");
+            }
+        }
+
+        private void AgregarVenta(Venta venta, ref StreamWriter servidorStreamWriter)
+        {
+            try
+            {
+                // Buscar el cliente real por su identificación
+                var clientes = logicaCliente.ObtenerClientes();
+                var clienteReal = clientes.FirstOrDefault(c => 
+                    string.Equals(c.Identificacion, venta.Cliente.Identificacion, StringComparison.OrdinalIgnoreCase));
+
+                if (clienteReal == null)
+                {
+                    EnviarRespuesta("ERROR: Cliente no encontrado", ref servidorStreamWriter);
+                    return;
+                }
+
+                // Buscar el partido real
+                var partidos = logicaPartido.ObtenerPartidos();
+                var partidoReal = partidos.FirstOrDefault(p => p.IdPartido == venta.Partido.IdPartido);
+
+                if (partidoReal == null)
+                {
+                    EnviarRespuesta("ERROR: Partido no encontrado", ref servidorStreamWriter);
+                    return;
+                }
+
+                // Buscar la localidad real
+                var localidades = logicaLocalidad.ObtenerLocalidades();
+                var localidadReal = localidades.FirstOrDefault(l => l.IdLocalidad == venta.Localidad.IdLocalidad);
+
+                if (localidadReal == null)
+                {
+                    EnviarRespuesta("ERROR: Localidad no encontrada", ref servidorStreamWriter);
+                    return;
+                }
+
+                // Obtener el siguiente ID de venta (auto-incremental)
+                var ventasExistentes = logicaVenta.ObtenerVentas();
+                int nuevoIdVenta = ventasExistentes.Length > 0 ? ventasExistentes.Max(v => v.IdVenta) + 1 : 1;
+
+                // Crear la venta con los datos completos
+                var ventaCompleta = new Venta(
+                    nuevoIdVenta,
+                    clienteReal,
+                    partidoReal,
+                    localidadReal,
+                    venta.Cantidad,
+                    null, // Sin vendedor para ventas en línea
+                    venta.FechaVenta,
+                    venta.MontoTotal,
+                    venta.TipoVenta
+                );
+
+                // Validar y agregar la venta usando la lógica de negocio
+                logicaVenta.AgregarVenta(ventaCompleta);
+                
+                EnviarRespuesta("OK", ref servidorStreamWriter);
+                txtBitacora.Invoke(modificarTextotxtBitacora, 
+                    new object[] { $"Venta agregada exitosamente: Cliente {clienteReal.Identificacion}, Partido {partidoReal.Rival}, Monto: ₡{venta.MontoTotal:N2}" });
+            }
+            catch (Exception ex)
+            {
+                EnviarRespuesta($"ERROR: {ex.Message}", ref servidorStreamWriter);
+                txtBitacora.Invoke(modificarTextotxtBitacora, 
+                    new object[] { $"Error al agregar venta: {ex.Message}" });
+            }
+        }
+
         private void Conectar(string pIdentificadorCliente)
        { 
             txtBitacora.Invoke(modificarTextotxtBitacora, new object[] { pIdentificadorCliente + "se ha conectado..." });

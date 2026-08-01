@@ -74,8 +74,18 @@ namespace LogicaNegocios
                 {
                     // Leer mensaje del cliente
                     var mensaje = reader.ReadLine();
-                    // Utilizamos invoke para disparar el evento
-                    MensajeRecibido?.Invoke(this, (mensaje, writer));
+                    
+                    // Validar que el mensaje no sea null antes de invocar el evento
+                    if (!string.IsNullOrWhiteSpace(mensaje))
+                    {
+                        // Utilizamos invoke para disparar el evento
+                        MensajeRecibido?.Invoke(this, (mensaje, writer));
+                    }
+                    else
+                    {
+                        // Si el mensaje es null o vacío, el cliente probablemente se desconectó
+                        break;
+                    }
                 }
                 catch (IOException)
                 {

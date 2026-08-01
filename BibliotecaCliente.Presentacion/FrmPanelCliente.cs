@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Entidades;
-using LogicaNegocios;
 
 namespace BibliotecaCliente.Presentacion
 {
@@ -27,19 +26,33 @@ namespace BibliotecaCliente.Presentacion
                 ? "Usuario"
                 : this.identificacionCliente;
 
+            // Agregar manejador de evento para cerrar la conexión al salir
+            this.FormClosing += FrmPanelCliente_FormClosing;
+
             CargarVentasCliente();
+        }
+
+        private void FrmPanelCliente_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Desconectar el cliente TCP cuando se cierre el formulario
+            if (!string.IsNullOrWhiteSpace(identificacionCliente))
+            {
+                ClienteTCP.Desconectar(identificacionCliente);
+            }
         }
 
         private void CargarVentasCliente()
         {
             try
             {
-                var logicaVenta = new LogicaVenta();
-                var ventasCliente = logicaVenta.ObtenerVentas()
-                    .Where(v => v.Cliente != null &&
-                                string.Equals(v.Cliente.Identificacion, identificacionCliente, StringComparison.OrdinalIgnoreCase))
-                    .OrderByDescending(v => v.FechaVenta)
-                    .ToList();
+                if (string.IsNullOrWhiteSpace(identificacionCliente))
+                {
+                    MessageBox.Show("No hay identificación de cliente válida.", "Advertencia",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var ventasCliente = ClienteTCP.ObtenerVentasCliente(identificacionCliente);
 
                 dataGridView1.Rows.Clear();
 
@@ -65,17 +78,32 @@ namespace BibliotecaCliente.Presentacion
                         venta.TipoVenta ?? string.Empty
                     );
                 }
+
+                if (ventasCliente.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron ventas para este cliente.", "Información",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"No se pudieron cargar las ventas del cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cargar las ventas del cliente: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btNueva_Click(object sender, EventArgs e)
         {
-            FrmRegistroVenta frmRegistroVenta = new FrmRegistroVenta();
+            FrmRegistroVenta frmRegistroVenta = new FrmRegistroVenta(identificacionCliente);
             frmRegistroVenta.ShowDialog();
+            
+            // Recargar ventas después de cerrar el formulario de registro
+            CargarVentasCliente();
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

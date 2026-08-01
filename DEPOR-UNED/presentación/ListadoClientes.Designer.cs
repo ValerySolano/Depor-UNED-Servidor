@@ -52,10 +52,11 @@ namespace presentación
             dataGridClientes.AllowUserToAddRows = false;
             dataGridClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridClientes.Columns.AddRange(new DataGridViewColumn[] { ID, Identificacion, Nombre, Apellido, FechaNacimiento, FechaRegistro, Activo });
-            dataGridClientes.Location = new Point(12, 118);
+            dataGridClientes.Location = new Point(10, 88);
+            dataGridClientes.Margin = new Padding(3, 2, 3, 2);
             dataGridClientes.Name = "dataGridClientes";
             dataGridClientes.RowHeadersWidth = 51;
-            dataGridClientes.Size = new Size(927, 409);
+            dataGridClientes.Size = new Size(811, 307);
             dataGridClientes.TabIndex = 0;
             // 
             // ID
@@ -125,9 +126,9 @@ namespace presentación
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 19);
+            label1.Location = new Point(10, 14);
             label1.Name = "label1";
-            label1.Size = new Size(377, 54);
+            label1.Size = new Size(300, 45);
             label1.TabIndex = 1;
             label1.Text = "Listado de Clientes";
             // 
@@ -137,9 +138,10 @@ namespace presentación
             btnNuevoCliente.BackColor = Color.Teal;
             btnNuevoCliente.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNuevoCliente.ForeColor = SystemColors.ButtonHighlight;
-            btnNuevoCliente.Location = new Point(734, 63);
+            btnNuevoCliente.Location = new Point(642, 47);
+            btnNuevoCliente.Margin = new Padding(3, 2, 3, 2);
             btnNuevoCliente.Name = "btnNuevoCliente";
-            btnNuevoCliente.Size = new Size(205, 49);
+            btnNuevoCliente.Size = new Size(179, 37);
             btnNuevoCliente.TabIndex = 2;
             btnNuevoCliente.Text = "+ Nuevo Cliente";
             btnNuevoCliente.UseVisualStyleBackColor = false;
@@ -147,14 +149,15 @@ namespace presentación
             // 
             // ListadoClientes
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(940, 533);
+            ClientSize = new Size(822, 400);
             Controls.Add(btnNuevoCliente);
             Controls.Add(label1);
             Controls.Add(dataGridClientes);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ListadoClientes";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "ListadoClientes";
             Load += ListadoClientes_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridClientes).EndInit();

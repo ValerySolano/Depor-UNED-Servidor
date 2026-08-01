@@ -34,22 +34,58 @@ namespace BibliotecaCliente.Presentacion
                 return false;
             }
         }
-       public static bool Conectar(string pIdentificacionCliente)
+       public static string ConectarYValidar(string pIdentificacionCliente)
         {
             try
             {
+                // Establecer la conexión TCP persistente
                 ipServidor = IPAddress.Parse("127.0.0.1");
                 cliente = new TcpClient();
                 serverEndPoint = new IPEndPoint(ipServidor, puerto);
                 cliente.Connect(serverEndPoint);
-                MensajeSocket<string> mensajeSocket = new MensajeSocket<string> { Metodo = "Conectar", Entidad = pIdentificacionCliente };
                 clienteStreamWriter = new StreamWriter(cliente.GetStream());
                 clienteStreamReader = new StreamReader(cliente.GetStream());
-                return EnviarRespuesta(JsonConvert.SerializeObject(mensajeSocket));
+
+                // Validar usando la conexión establecida
+                MensajeSocket<string> mensajeValidacion = new MensajeSocket<string> 
+                { 
+                    Metodo = "ValidarIdentificacion", 
+                    Entidad = pIdentificacionCliente 
+                };
+                
+                string resultadoValidacion = EnviarMensaje(JsonConvert.SerializeObject(mensajeValidacion));
+                
+                // Si la validación es exitosa, enviar mensaje de conexión
+                if (resultadoValidacion == "VALIDO")
+                {
+                    MensajeSocket<string> mensajeConexion = new MensajeSocket<string> 
+                    { 
+                        Metodo = "Conectar", 
+                        Entidad = pIdentificacionCliente 
+                    };
+                    EnviarRespuesta(JsonConvert.SerializeObject(mensajeConexion));
+                    return "VALIDO";
+                }
+                else
+                {
+                    // Si la validación falla, cerrar la conexión
+                    clienteStreamWriter?.Close();
+                    clienteStreamReader?.Close();
+                    cliente?.Close();
+                    return resultadoValidacion ?? "ERROR";
+                }
             }
             catch (Exception)
             {
-                return false;
+                // En caso de error, cerrar la conexión si existe
+                try
+                {
+                    clienteStreamWriter?.Close();
+                    clienteStreamReader?.Close();
+                    cliente?.Close();
+                }
+                catch { }
+                return "ERROR";
             }
         }
         public static void Desconectar(string pIdentificacion)
@@ -64,19 +100,24 @@ namespace BibliotecaCliente.Presentacion
             }
         }
 
-        public static bool ValidarIdentificacion(string pIdentificacionCliente)
+        public static string ValidarIdentificacion(string pIdentificacionCliente)
         {
+            TcpClient clienteTemp = null;
+            StreamWriter writerTemp = null;
+            StreamReader readerTemp = null;
+            
             try
             {
                 if (string.IsNullOrWhiteSpace(pIdentificacionCliente))
                 {
-                    return false;
+                    return "ERROR";
                 }
 
+                // Crear conexión temporal solo para validación
                 ipServidor = IPAddress.Parse("127.0.0.1");
-                cliente = new TcpClient();
+                clienteTemp = new TcpClient();
                 serverEndPoint = new IPEndPoint(ipServidor, puerto);
-                cliente.Connect(serverEndPoint);
+                clienteTemp.Connect(serverEndPoint);
 
                 MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
                 {
@@ -84,15 +125,31 @@ namespace BibliotecaCliente.Presentacion
                     Entidad = pIdentificacionCliente.Trim()
                 };
 
-                clienteStreamWriter = new StreamWriter(cliente.GetStream());
-                clienteStreamReader = new StreamReader(cliente.GetStream());
+                writerTemp = new StreamWriter(clienteTemp.GetStream());
+                readerTemp = new StreamReader(clienteTemp.GetStream());
 
-                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
-                return bool.TryParse(respuesta, out bool existe) && existe;
+                writerTemp.WriteLine(JsonConvert.SerializeObject(mensajeSocket));
+                writerTemp.Flush();
+                
+                string respuesta = readerTemp.ReadLine();
+                return respuesta ?? "ERROR";
             }
             catch (Exception)
             {
-                return false;
+                return "ERROR";
+            }
+            finally
+            {
+                try
+                {
+                    writerTemp?.Close();
+                    readerTemp?.Close();
+                    clienteTemp?.Close();
+                }
+                catch
+                {
+                    // Ignorar errores al cerrar
+                }
             }
         }
 
@@ -105,6 +162,172 @@ namespace BibliotecaCliente.Presentacion
             else
             {
                 return "Error al enviar el mensaje.";
+            }
+        }
+
+        public static List<Venta> ObtenerVentasCliente(string identificacionCliente)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(identificacionCliente))
+                {
+                    return new List<Venta>();
+                }
+
+                if (cliente == null || !cliente.Connected)
+                {
+                    return new List<Venta>();
+                }
+
+                MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
+                {
+                    Metodo = "ObtenerVentasCliente",
+                    Entidad = identificacionCliente.Trim()
+                };
+
+                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
+                
+                if (string.IsNullOrWhiteSpace(respuesta) || respuesta == "[]")
+                {
+                    return new List<Venta>();
+                }
+
+                var ventas = JsonConvert.DeserializeObject<List<Venta>>(respuesta);
+                return ventas ?? new List<Venta>();
+            }
+            catch (Exception)
+            {
+                return new List<Venta>();
+            }
+        }
+
+        public static List<Partido> ObtenerPartidos()
+        {
+            try
+            {
+                if (cliente == null || !cliente.Connected)
+                {
+                    return new List<Partido>();
+                }
+
+                MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
+                {
+                    Metodo = "ObtenerPartidos",
+                    Entidad = ""
+                };
+
+                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
+
+                if (string.IsNullOrWhiteSpace(respuesta) || respuesta == "[]")
+                {
+                    return new List<Partido>();
+                }
+
+                var partidos = JsonConvert.DeserializeObject<List<Partido>>(respuesta);
+                return partidos ?? new List<Partido>();
+            }
+            catch (Exception)
+            {
+                return new List<Partido>();
+            }
+        }
+
+        public static List<Localidad> ObtenerLocalidades()
+        {
+            try
+            {
+                if (cliente == null || !cliente.Connected)
+                {
+                    return new List<Localidad>();
+                }
+
+                MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
+                {
+                    Metodo = "ObtenerLocalidades",
+                    Entidad = ""
+                };
+
+                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
+
+                if (string.IsNullOrWhiteSpace(respuesta) || respuesta == "[]")
+                {
+                    return new List<Localidad>();
+                }
+
+                var localidades = JsonConvert.DeserializeObject<List<Localidad>>(respuesta);
+                return localidades ?? new List<Localidad>();
+            }
+            catch (Exception)
+            {
+                return new List<Localidad>();
+            }
+        }
+
+        public static dynamic VerificarDisponibilidad(int idPartido, int idLocalidad, int cantidad)
+        {
+            try
+            {
+                if (cliente == null || !cliente.Connected)
+                {
+                    return new { disponible = false, cantidadDisponible = 0, precio = 0m };
+                }
+
+                var datosVerificacion = new DatosVerificacionDisponibilidad
+                {
+                    IdPartido = idPartido,
+                    IdLocalidad = idLocalidad,
+                    Cantidad = cantidad
+                };
+
+                MensajeSocket<DatosVerificacionDisponibilidad> mensajeSocket = new MensajeSocket<DatosVerificacionDisponibilidad>
+                {
+                    Metodo = "VerificarDisponibilidad",
+                    Entidad = datosVerificacion
+                };
+
+                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
+
+                if (string.IsNullOrWhiteSpace(respuesta))
+                {
+                    return new { disponible = false, cantidadDisponible = 0, precio = 0m };
+                }
+
+                var resultado = JsonConvert.DeserializeObject<dynamic>(respuesta);
+                return resultado;
+            }
+            catch (Exception)
+            {
+                return new { disponible = false, cantidadDisponible = 0, precio = 0m };
+            }
+        }
+
+        public static bool AgregarVenta(Venta venta)
+        {
+            try
+            {
+                if (cliente == null || !cliente.Connected)
+                {
+                    throw new Exception("No hay conexión con el servidor");
+                }
+
+                MensajeSocket<Venta> mensajeSocket = new MensajeSocket<Venta>
+                {
+                    Metodo = "AgregarVenta",
+                    Entidad = venta
+                };
+
+                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
+
+                if (respuesta.StartsWith("ERROR:"))
+                {
+                    throw new Exception(respuesta.Replace("ERROR: ", ""));
+                }
+
+                return respuesta == "OK";
+            }
+            catch (Exception)
+            {
+                throw; // Re-lanzar la excepción para que sea capturada en el formulario
             }
         }
     }

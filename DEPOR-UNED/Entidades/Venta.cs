@@ -13,12 +13,12 @@ namespace Entidades
         public Partido Partido { get; set; }
         public Localidad Localidad { get; set; }
         public int Cantidad { get; set; }
-        public Vendedor Vendedor { get; set; }
+        public Vendedor? Vendedor { get; set; }
         public DateTime FechaVenta { get; set; }
         public decimal MontoTotal { get; set; }
         public string TipoVenta { get; set; }
         // Ejecuta la logica principal del metodo Venta.
-        public Venta(int idVenta, Cliente cliente, Partido partido, Localidad localidad, int cantidad, Vendedor vendedor, DateTime fechaVenta, decimal montoTotal, string tipoVenta)
+        public Venta(int idVenta, Cliente cliente, Partido partido, Localidad localidad, int cantidad, Vendedor? vendedor, DateTime fechaVenta, decimal montoTotal, string tipoVenta)
         {
             this.IdVenta = idVenta;
             this.Cliente = cliente;

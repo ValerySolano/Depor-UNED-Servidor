@@ -35,14 +35,14 @@ namespace presentación
         private void InitializeComponent()
         {
             DatosPartidos = new DataGridView();
-            btnNuevo = new Button();
-            label1 = new Label();
             Id = new DataGridViewTextBoxColumn();
             Identificacion = new DataGridViewTextBoxColumn();
             Nombre = new DataGridViewTextBoxColumn();
             Apellido = new DataGridViewTextBoxColumn();
             FechaNacimiento = new DataGridViewTextBoxColumn();
             FechaRegistro = new DataGridViewTextBoxColumn();
+            btnNuevo = new Button();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)DatosPartidos).BeginInit();
             SuspendLayout();
             // 
@@ -52,35 +52,12 @@ namespace presentación
             DatosPartidos.AllowUserToDeleteRows = false;
             DatosPartidos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DatosPartidos.Columns.AddRange(new DataGridViewColumn[] { Id, Identificacion, Nombre, Apellido, FechaNacimiento, FechaRegistro });
-            DatosPartidos.Location = new Point(1, 52);
+            DatosPartidos.Location = new Point(1, 39);
+            DatosPartidos.Margin = new Padding(3, 2, 3, 2);
             DatosPartidos.Name = "DatosPartidos";
             DatosPartidos.RowHeadersWidth = 51;
-            DatosPartidos.Size = new Size(759, 338);
+            DatosPartidos.Size = new Size(664, 254);
             DatosPartidos.TabIndex = 1;
-            // 
-            // btnNuevo
-            // 
-            btnNuevo.BackColor = Color.Green;
-            btnNuevo.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = SystemColors.ButtonHighlight;
-            btnNuevo.Location = new Point(612, 13);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(148, 39);
-            btnNuevo.TabIndex = 3;
-            btnNuevo.Text = "+Nuevo";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += btnNuevoPartido_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.DimGray;
-            label1.Location = new Point(43, 13);
-            label1.Name = "label1";
-            label1.Size = new Size(255, 31);
-            label1.TabIndex = 4;
-            label1.Text = "Listado de Vendedores";
             // 
             // Id
             // 
@@ -136,18 +113,44 @@ namespace presentación
             FechaRegistro.ReadOnly = true;
             FechaRegistro.Width = 150;
             // 
+            // btnNuevo
+            // 
+            btnNuevo.BackColor = Color.Green;
+            btnNuevo.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNuevo.ForeColor = SystemColors.ButtonHighlight;
+            btnNuevo.Location = new Point(536, 10);
+            btnNuevo.Margin = new Padding(3, 2, 3, 2);
+            btnNuevo.Name = "btnNuevo";
+            btnNuevo.Size = new Size(130, 29);
+            btnNuevo.TabIndex = 3;
+            btnNuevo.Text = "+Nuevo";
+            btnNuevo.UseVisualStyleBackColor = false;
+            btnNuevo.Click += btnNuevoPartido_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.DimGray;
+            label1.Location = new Point(38, 10);
+            label1.Name = "label1";
+            label1.Size = new Size(214, 25);
+            label1.TabIndex = 4;
+            label1.Text = "Listado de Vendedores";
+            // 
             // ListadoVendedores
             // 
-            Load += ListadoVendedores_Load;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(762, 390);
+            ClientSize = new Size(667, 292);
             Controls.Add(label1);
             Controls.Add(btnNuevo);
             Controls.Add(DatosPartidos);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ListadoVendedores";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "ListadoVendedores";
+            Load += ListadoVendedores_Load;
             ((System.ComponentModel.ISupportInitialize)DatosPartidos).EndInit();
             ResumeLayout(false);
             PerformLayout();

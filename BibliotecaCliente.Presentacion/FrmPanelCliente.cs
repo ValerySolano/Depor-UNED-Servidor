@@ -54,7 +54,7 @@ namespace BibliotecaCliente.Presentacion
 
                 var ventasCliente = ClienteTCP.ObtenerVentasCliente(identificacionCliente);
 
-                dataGridView1.Rows.Clear();
+                dataGridCompras.Rows.Clear();
 
                 foreach (var venta in ventasCliente)
                 {
@@ -64,7 +64,7 @@ namespace BibliotecaCliente.Presentacion
                         nombreVendedor = $"{venta.Vendedor.Nombre} {venta.Vendedor.Apellido}".Trim();
                     }
 
-                    dataGridView1.Rows.Add(
+                    dataGridCompras.Rows.Add(
                         venta.IdVenta,
                         venta.Partido?.Rival ?? string.Empty,
                         venta.Partido?.Fecha.ToShortDateString() ?? string.Empty,

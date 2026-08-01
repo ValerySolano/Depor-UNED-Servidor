@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            dataGridView1 = new DataGridView();
+            dataGridCompras = new DataGridView();
             IdVenta = new DataGridViewTextBoxColumn();
             Rival = new DataGridViewTextBoxColumn();
             Fecha = new DataGridViewTextBoxColumn();
@@ -46,32 +46,33 @@
             btNueva = new Button();
             btnSalir = new Button();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridCompras).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.Controls.Add(dataGridView1);
+            panel1.Controls.Add(dataGridCompras);
             panel1.Location = new Point(10, 58);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
             panel1.Size = new Size(942, 271);
             panel1.TabIndex = 0;
             // 
-            // dataGridView1
+            // dataGridCompras
             // 
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { IdVenta, Rival, Fecha, Hora, Activo, IDLocalidad, NombreLocalidad, Vendedor, Cantidad, FechaCompra, TipoCompra });
-            dataGridView1.Location = new Point(12, 16);
-            dataGridView1.Margin = new Padding(3, 2, 3, 2);
-            dataGridView1.MultiSelect = false;
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(929, 244);
-            dataGridView1.TabIndex = 0;
+            dataGridCompras.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridCompras.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridCompras.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridCompras.Columns.AddRange(new DataGridViewColumn[] { IdVenta, Rival, Fecha, Hora, Activo, IDLocalidad, NombreLocalidad, Vendedor, Cantidad, FechaCompra, TipoCompra });
+            dataGridCompras.Location = new Point(12, 16);
+            dataGridCompras.Margin = new Padding(3, 2, 3, 2);
+            dataGridCompras.MultiSelect = false;
+            dataGridCompras.Name = "dataGridCompras";
+            dataGridCompras.ReadOnly = true;
+            dataGridCompras.RowHeadersVisible = false;
+            dataGridCompras.RowHeadersWidth = 51;
+            dataGridCompras.Size = new Size(929, 244);
+            dataGridCompras.TabIndex = 0;
             // 
             // IdVenta
             // 
@@ -183,13 +184,16 @@
             // 
             // btNueva
             // 
+            btNueva.BackColor = Color.SeaGreen;
+            btNueva.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btNueva.ForeColor = SystemColors.ControlLightLight;
             btNueva.Location = new Point(718, 24);
             btNueva.Margin = new Padding(3, 2, 3, 2);
             btNueva.Name = "btNueva";
             btNueva.Size = new Size(138, 30);
             btNueva.TabIndex = 3;
             btNueva.Text = "Nueva";
-            btNueva.UseVisualStyleBackColor = true;
+            btNueva.UseVisualStyleBackColor = false;
             btNueva.Click += btNueva_Click;
             // 
             // btnSalir
@@ -197,9 +201,9 @@
             btnSalir.BackColor = Color.Firebrick;
             btnSalir.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = SystemColors.ButtonHighlight;
-            btnSalir.Location = new Point(862, 25);
+            btnSalir.Location = new Point(862, 24);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(89, 29);
+            btnSalir.Size = new Size(89, 30);
             btnSalir.TabIndex = 4;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -222,7 +226,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Panel Del Cliente";
             panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridCompras).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -230,7 +234,7 @@
         #endregion
 
         private Panel panel1;
-        private DataGridView dataGridView1;
+        private DataGridView dataGridCompras;
         private DataGridViewTextBoxColumn IdVenta;
         private DataGridViewTextBoxColumn Rival;
         private DataGridViewTextBoxColumn Fecha;

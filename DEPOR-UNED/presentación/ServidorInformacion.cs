@@ -347,12 +347,12 @@ namespace presentación
 
         private void Conectar(string pIdentificadorCliente)
        { 
-            txtBitacora.Invoke(modificarTextotxtBitacora, new object[] { pIdentificadorCliente + "se ha conectado..." });
+            txtBitacora.Invoke(modificarTextotxtBitacora, new object[] { pIdentificadorCliente + " se ha conectado..." });
             LstClientesConectados.Invoke(modificarListBoxClientes, new object[] { pIdentificadorCliente, true });
         }
         private void Desconectar(string pIdentificadorCliente)
         {
-            txtBitacora.Invoke(modificarTextotxtBitacora, new object[] { pIdentificadorCliente + "se ha desconectado..." });
+            txtBitacora.Invoke(modificarTextotxtBitacora, new object[] { pIdentificadorCliente + " se ha desconectado..." });
             LstClientesConectados.Invoke(modificarListBoxClientes, new object[] { pIdentificadorCliente, false });
         }
 

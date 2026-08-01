@@ -35,7 +35,7 @@ namespace BibliotecaCliente.Presentacion
             {
                 if (string.IsNullOrWhiteSpace(identificacionCliente))
                 {
-                    MessageBox.Show("No hay identificación de cliente válida.", "Advertencia", 
+                    MessageBox.Show("No hay identificación de cliente válida.", "Advertencia",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -69,13 +69,13 @@ namespace BibliotecaCliente.Presentacion
 
                 if (ventasCliente.Count == 0)
                 {
-                    MessageBox.Show("No se encontraron ventas para este cliente.", "Información", 
+                    MessageBox.Show("No se encontraron ventas para este cliente.", "Información",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar las ventas del cliente: {ex.Message}", "Error", 
+                MessageBox.Show($"Error al cargar las ventas del cliente: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -84,6 +84,11 @@ namespace BibliotecaCliente.Presentacion
         {
             FrmRegistroVenta frmRegistroVenta = new FrmRegistroVenta();
             frmRegistroVenta.ShowDialog();
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

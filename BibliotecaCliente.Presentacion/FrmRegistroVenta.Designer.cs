@@ -135,6 +135,7 @@
             btnGuardar.TabIndex = 20;
             btnGuardar.Text = "  Guardar";
             btnGuardar.UseVisualStyleBackColor = false;
+            btnGuardar.Click += btnGuardar_Click;
             // 
             // btnSalir
             // 
@@ -162,6 +163,7 @@
             btnCalcular.TabIndex = 19;
             btnCalcular.Text = "  Calcular";
             btnCalcular.UseVisualStyleBackColor = false;
+            btnCalcular.Click += btnCalcular_Click;
             // 
             // panel2
             // 

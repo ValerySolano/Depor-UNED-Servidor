@@ -20,6 +20,7 @@ namespace presentación
     {
         private readonly NegocioComunicacionTCP comunicacionTCP = new NegocioComunicacionTCP();
         private readonly LogicaCliente logicaCliente = new LogicaCliente();
+        private readonly LogicaVenta logicaVenta = new LogicaVenta();
 
         private delegate void EscribirEnTextBoxDelegate(string texto);
         private delegate void ModificarListBoxDelegate(string texto, bool agregar);
@@ -81,6 +82,11 @@ namespace presentación
                     }
                     break;
 
+                case "ObtenerVentasCliente":
+                    var identificacionVentas = (string)entidad;
+                    ObtenerVentasCliente(identificacionVentas, ref servidorStreamWriter);
+                    break;
+
                 case "Desconectar":
                     Desconectar((string)entidad);
                     // var entidadAutor= JsonConvert.DeserializeObject<Autor>(JsonConvert.SerializeObject(entidad));
@@ -114,6 +120,30 @@ namespace presentación
             catch (Exception ex)
             {
                 MessageBox.Show("No fue posible enviar los datos correctamente.", ex.Message);
+            }
+        }
+
+        private void ObtenerVentasCliente(string identificacionCliente, ref StreamWriter servidorStreamWriter)
+        {
+            try
+            {
+                var todasLasVentas = logicaVenta.ObtenerVentas();
+                var ventasCliente = todasLasVentas
+                    .Where(v => v.Cliente != null && 
+                                string.Equals(v.Cliente.Identificacion, identificacionCliente, StringComparison.OrdinalIgnoreCase))
+                    .OrderByDescending(v => v.FechaVenta)
+                    .ToList();
+
+                var respuesta = JsonConvert.SerializeObject(ventasCliente);
+                EnviarRespuesta(respuesta, ref servidorStreamWriter);
+                
+                txtBitacora.Invoke(modificarTextotxtBitacora, 
+                    new object[] { $"Enviadas {ventasCliente.Count} ventas del cliente {identificacionCliente}" });
+            }
+            catch (Exception ex)
+            {
+                EnviarRespuesta("[]", ref servidorStreamWriter);
+                MessageBox.Show($"Error al obtener ventas del cliente: {ex.Message}", "Error");
             }
         }
         private void Conectar(string pIdentificadorCliente)

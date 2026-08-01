@@ -31,44 +31,53 @@ namespace BibliotecaCliente.Presentacion
 
         private void CargarVentasCliente()
         {
-            //try
-            //{
-            //    var logicaVenta = new LogicaVenta();
-            //    var ventasCliente = logicaVenta.ObtenerVentas()
-            //        .Where(v => v.Cliente != null &&
-            //                    string.Equals(v.Cliente.Identificacion, identificacionCliente, StringComparison.OrdinalIgnoreCase))
-            //        .OrderByDescending(v => v.FechaVenta)
-            //        .ToList();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(identificacionCliente))
+                {
+                    MessageBox.Show("No hay identificación de cliente válida.", "Advertencia", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            //    dataGridView1.Rows.Clear();
+                var ventasCliente = ClienteTCP.ObtenerVentasCliente(identificacionCliente);
 
-            //    foreach (var venta in ventasCliente)
-            //    {
-            //        string nombreVendedor = string.Empty;
-            //        if (venta.Vendedor != null)
-            //        {
-            //            nombreVendedor = $"{venta.Vendedor.Nombre} {venta.Vendedor.Apellido}".Trim();
-            //        }
+                dataGridView1.Rows.Clear();
 
-            //        dataGridView1.Rows.Add(
-            //            venta.IdVenta,
-            //            venta.Partido?.Rival ?? string.Empty,
-            //            venta.Partido?.Fecha.ToShortDateString() ?? string.Empty,
-            //            venta.Partido?.Hora ?? string.Empty,
-            //            venta.Partido != null && venta.Partido.Activo ? "Activo" : "Inactivo",
-            //            venta.Localidad?.IdLocalidad ?? 0,
-            //            venta.Localidad?.NombreLocalidad ?? string.Empty,
-            //            nombreVendedor,
-            //            venta.Cantidad,
-            //            venta.FechaVenta.ToShortDateString(),
-            //            venta.TipoVenta ?? string.Empty
-            //        );
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"No se pudieron cargar las ventas del cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                foreach (var venta in ventasCliente)
+                {
+                    string nombreVendedor = string.Empty;
+                    if (venta.Vendedor != null)
+                    {
+                        nombreVendedor = $"{venta.Vendedor.Nombre} {venta.Vendedor.Apellido}".Trim();
+                    }
+
+                    dataGridView1.Rows.Add(
+                        venta.IdVenta,
+                        venta.Partido?.Rival ?? string.Empty,
+                        venta.Partido?.Fecha.ToShortDateString() ?? string.Empty,
+                        venta.Partido?.Hora ?? string.Empty,
+                        venta.Partido != null && venta.Partido.Activo ? "Activo" : "Inactivo",
+                        venta.Localidad?.IdLocalidad ?? 0,
+                        venta.Localidad?.NombreLocalidad ?? string.Empty,
+                        nombreVendedor,
+                        venta.Cantidad,
+                        venta.FechaVenta.ToShortDateString(),
+                        venta.TipoVenta ?? string.Empty
+                    );
+                }
+
+                if (ventasCliente.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron ventas para este cliente.", "Información", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar las ventas del cliente: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btNueva_Click(object sender, EventArgs e)

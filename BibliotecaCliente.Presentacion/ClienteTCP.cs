@@ -107,5 +107,57 @@ namespace BibliotecaCliente.Presentacion
                 return "Error al enviar el mensaje.";
             }
         }
+
+        public static List<Venta> ObtenerVentasCliente(string identificacionCliente)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(identificacionCliente))
+                {
+                    return new List<Venta>();
+                }
+
+                ipServidor = IPAddress.Parse("127.0.0.1");
+                cliente = new TcpClient();
+                serverEndPoint = new IPEndPoint(ipServidor, puerto);
+                cliente.Connect(serverEndPoint);
+
+                MensajeSocket<string> mensajeSocket = new MensajeSocket<string>
+                {
+                    Metodo = "ObtenerVentasCliente",
+                    Entidad = identificacionCliente.Trim()
+                };
+
+                clienteStreamWriter = new StreamWriter(cliente.GetStream());
+                clienteStreamReader = new StreamReader(cliente.GetStream());
+
+                string respuesta = EnviarMensaje(JsonConvert.SerializeObject(mensajeSocket));
+                
+                if (string.IsNullOrWhiteSpace(respuesta) || respuesta == "[]")
+                {
+                    return new List<Venta>();
+                }
+
+                var ventas = JsonConvert.DeserializeObject<List<Venta>>(respuesta);
+                return ventas ?? new List<Venta>();
+            }
+            catch (Exception)
+            {
+                return new List<Venta>();
+            }
+            finally
+            {
+                try
+                {
+                    clienteStreamWriter?.Close();
+                    clienteStreamReader?.Close();
+                    cliente?.Close();
+                }
+                catch
+                {
+                    // Ignorar errores al cerrar
+                }
+            }
+        }
     }
 }

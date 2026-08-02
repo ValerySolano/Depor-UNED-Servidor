@@ -14,11 +14,6 @@ namespace BibliotecaCliente.Presentacion
             InitializeComponent();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void btnIniciarSession_Click(object sender, EventArgs e)
         {
             string identificacion = txtIdentificacion.Text?.Trim();
@@ -58,7 +53,7 @@ namespace BibliotecaCliente.Presentacion
                 clienteConectado = true;
                 FrmPanelCliente panelCliente = new FrmPanelCliente(identificacion);
                 
-                // Suscribirse al evento FormClosed para volver a mostrar el login cuando se cierre
+                // Suscribirse al evento FormClosed para volver a mostrar el login cuando se cierre el panel del cliente
                 panelCliente.FormClosed += (s, args) =>
                 {
                     txtIdentificacion.Clear();
@@ -66,8 +61,8 @@ namespace BibliotecaCliente.Presentacion
                     clienteConectado = false;
                 };
                 
-                panelCliente.Show();
-                this.Hide();
+                panelCliente.Show(); 
+                this.Hide(); // Ocultar el formulario de login mientras el panel del cliente está abierto
                 this.labelConexion.Text = "Conexión establecida con el servidor.";
                 this.labelConexionError.Text = " ";
                 this.labelConexion.Refresh(); // Asegura que el label se actualice después de la operación de red

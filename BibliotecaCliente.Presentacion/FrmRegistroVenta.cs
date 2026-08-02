@@ -35,6 +35,7 @@ namespace BibliotecaCliente.Presentacion
 
         private void FrmRegistroVenta_Load(object sender, EventArgs e)
         {
+            // Cargar partidos y localidades al iniciar el formulario
             CargarPartidos();
             CargarLocalidades();
             OcultarResumen();
@@ -44,14 +45,16 @@ namespace BibliotecaCliente.Presentacion
         {
             try
             {
+                // Llamar al método ObtenerPartidos del ClienteTCP para obtener la lista de partidos
                 partidos = ClienteTCP.ObtenerPartidos();
-                comboPartido.Items.Clear();
+                comboPartido.Items.Clear(); // Limpiar los elementos existentes antes de agregar nuevos partidos
                 comboPartido.Items.Add("Seleccione partido");
                 
                 if (partidos != null && partidos.Count > 0)
                 {
                     foreach (var partido in partidos)
                     {
+                        // Agregar el partido al ComboBox con formato "Rival - Fecha Hora"
                         comboPartido.Items.Add($"{partido.Rival} - {partido.Fecha:dd/MM/yyyy} {partido.Hora}");
                     }
                 }
@@ -63,12 +66,14 @@ namespace BibliotecaCliente.Presentacion
             }
         }
 
+        // Método para cargar localidades en el ComboBox
         private void CargarLocalidades()
         {
             try
             {
+                // Llamar al método ObtenerLocalidades del ClienteTCP para obtener la lista de localidades
                 localidades = ClienteTCP.ObtenerLocalidades();
-                comboLocalidad.Items.Clear();
+                comboLocalidad.Items.Clear(); // Limpiar los elementos existentes antes de agregar nuevas localidades
                 comboLocalidad.Items.Add("Seleccione localidad");
                 
                 if (localidades != null && localidades.Count > 0)
@@ -85,48 +90,51 @@ namespace BibliotecaCliente.Presentacion
                 MessageBox.Show($"Error al cargar las localidades: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        // Método ocultar el panel de resumen, donde se muestran los calculos
         private void OcultarResumen()
         {
             panel3.Visible = false;
         }
-
+        // Método para mostrar el panel de resumen, donde se muestran los calculos
         private void MostrarResumen()
         {
             panel3.Visible = true;
         }
 
+        // Método para calcular la venta y mostrar el resumen
         private void btnCalcular_Click(object sender, EventArgs e)
         {
             try
             {
+                // Validar que se haya seleccionado un partido 
                 if (comboPartido.SelectedIndex <= 0)
                 {
                     MessageBox.Show("Por favor seleccione un partido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
+                // Validar que se haya seleccionado una localidad
                 if (comboLocalidad.SelectedIndex <= 0)
                 {
                     MessageBox.Show("Por favor seleccione una localidad.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
+                // Validar que se haya ingresado una cantidad válida
                 if (string.IsNullOrWhiteSpace(txtCantidad.Text))
                 {
                     MessageBox.Show("Por favor ingrese la cantidad.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
+                // Validar que la cantidad ingresada sea un número entero positivo
                 if (!int.TryParse(txtCantidad.Text, out int cantidad) || cantidad <= 0)
                 {
                     MessageBox.Show("Por favor ingrese una cantidad válida mayor a 0.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
+                // Obtener el partido y localidad seleccionados
                 var partidoSeleccionado = partidos[comboPartido.SelectedIndex - 1];
                 var localidadSeleccionada = localidades[comboLocalidad.SelectedIndex - 1];
-
+                // Llamar al método VerificarDisponibilidad del ClienteTCP para verificar la disponibilidad de localidades
                 var resultado = ClienteTCP.VerificarDisponibilidad(
                     partidoSeleccionado.IdPartido,
                     localidadSeleccionada.IdLocalidad,
@@ -146,7 +154,7 @@ namespace BibliotecaCliente.Presentacion
                 // Calcular total
                 decimal total = precio * cantidad;
 
-                // Mostrar resumen
+                // Mostrar los resultados en los labels de cantidad, precio y total
                 labelCantidad.Text = cantidad.ToString();
                 labelPrecio.Text = $"₡{precio:N2}";
                 labelTotal.Text = $"₡{total:N2}";
@@ -165,6 +173,7 @@ namespace BibliotecaCliente.Presentacion
         {
             try
             {
+                // Si intentamos guardar sin haber calculado primero, mostramos un mensaje de advertencia
                 if (!panel3.Visible)
                 {
                     MessageBox.Show("Por favor primero calcule la venta presionando el botón Calcular.", 
@@ -180,23 +189,14 @@ namespace BibliotecaCliente.Presentacion
                 decimal montoTotal = decimal.Parse(labelTotal.Text.Replace("₡", "").Replace(",", ""));
 
                 // Crear objeto cliente simplificado (solo con identificación para búsqueda en servidor)
-                var cliente = new Cliente(
-                    0, // IdCliente temporal (será resuelto en el servidor)
-                    identificacionCliente,
-                    "", "", // Nombre y apellido vacíos (serán completados en el servidor)
-                    DateTime.Now,
-                    DateTime.Now,
-                    true
-                );
+                var cliente = new Cliente(0,identificacionCliente,"", "", DateTime.Now,DateTime.Now,true);
 
                 // Crear la venta sin vendedor (venta en línea)
-                var venta = new Venta(
-                    0, // IdVenta se asignará automáticamente en el servidor
-                    cliente,
+                var venta = new Venta(0,cliente,
                     partidoSeleccionado,
                     localidadSeleccionada,
                     cantidad,
-                    null, // Sin vendedor para ventas en línea
+                    null,
                     DateTime.Now,
                     montoTotal,
                     "En Línea"
@@ -227,6 +227,7 @@ namespace BibliotecaCliente.Presentacion
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
+            // Limpiar los campos del formulario y ocultar el resumen
             comboPartido.SelectedIndex = 0;
             comboLocalidad.SelectedIndex = 0;
             txtCantidad.Clear();

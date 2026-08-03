@@ -35,14 +35,14 @@ namespace presentación
         private void InitializeComponent()
         {
             DatosPartidos = new DataGridView();
-            Id = new DataGridViewTextBoxColumn();
+            btnNuevo = new Button();
+            label1 = new Label();
+            ID = new DataGridViewTextBoxColumn();
             Identificacion = new DataGridViewTextBoxColumn();
             Nombre = new DataGridViewTextBoxColumn();
             Apellido = new DataGridViewTextBoxColumn();
             FechaNacimiento = new DataGridViewTextBoxColumn();
-            FechaRegistro = new DataGridViewTextBoxColumn();
-            btnNuevo = new Button();
-            label1 = new Label();
+            FechaIngreso = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)DatosPartidos).BeginInit();
             SuspendLayout();
             // 
@@ -51,23 +51,45 @@ namespace presentación
             DatosPartidos.AllowUserToAddRows = false;
             DatosPartidos.AllowUserToDeleteRows = false;
             DatosPartidos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DatosPartidos.Columns.AddRange(new DataGridViewColumn[] { Id, Identificacion, Nombre, Apellido, FechaNacimiento, FechaRegistro });
+            DatosPartidos.Columns.AddRange(new DataGridViewColumn[] { ID, Identificacion, Nombre, Apellido, FechaNacimiento, FechaIngreso });
             DatosPartidos.Location = new Point(1, 39);
             DatosPartidos.Margin = new Padding(3, 2, 3, 2);
             DatosPartidos.Name = "DatosPartidos";
             DatosPartidos.RowHeadersWidth = 51;
-            DatosPartidos.Size = new Size(664, 254);
+            DatosPartidos.Size = new Size(847, 254);
             DatosPartidos.TabIndex = 1;
             // 
-            // Id
+            // btnNuevo
             // 
-            Id.Frozen = true;
-            Id.HeaderText = "ID";
-            Id.MinimumWidth = 6;
-            Id.Name = "Id";
-            Id.ReadOnly = true;
-            Id.Visible = false;
-            Id.Width = 125;
+            btnNuevo.BackColor = Color.Green;
+            btnNuevo.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNuevo.ForeColor = SystemColors.ButtonHighlight;
+            btnNuevo.Location = new Point(718, 10);
+            btnNuevo.Margin = new Padding(3, 2, 3, 2);
+            btnNuevo.Name = "btnNuevo";
+            btnNuevo.Size = new Size(130, 29);
+            btnNuevo.TabIndex = 3;
+            btnNuevo.Text = "+Nuevo";
+            btnNuevo.UseVisualStyleBackColor = false;
+            btnNuevo.Click += btnNuevoPartido_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.DimGray;
+            label1.Location = new Point(38, 10);
+            label1.Name = "label1";
+            label1.Size = new Size(214, 25);
+            label1.TabIndex = 4;
+            label1.Text = "Listado de Vendedores";
+            // 
+            // ID
+            // 
+            ID.Frozen = true;
+            ID.HeaderText = "ID";
+            ID.Name = "ID";
+            ID.ReadOnly = true;
             // 
             // Identificacion
             // 
@@ -104,45 +126,20 @@ namespace presentación
             FechaNacimiento.ReadOnly = true;
             FechaNacimiento.Width = 180;
             // 
-            // FechaRegistro
+            // FechaIngreso
             // 
-            FechaRegistro.Frozen = true;
-            FechaRegistro.HeaderText = "Fecha Registro";
-            FechaRegistro.MinimumWidth = 6;
-            FechaRegistro.Name = "FechaRegistro";
-            FechaRegistro.ReadOnly = true;
-            FechaRegistro.Width = 150;
-            // 
-            // btnNuevo
-            // 
-            btnNuevo.BackColor = Color.Green;
-            btnNuevo.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = SystemColors.ButtonHighlight;
-            btnNuevo.Location = new Point(536, 10);
-            btnNuevo.Margin = new Padding(3, 2, 3, 2);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(130, 29);
-            btnNuevo.TabIndex = 3;
-            btnNuevo.Text = "+Nuevo";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += btnNuevoPartido_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.DimGray;
-            label1.Location = new Point(38, 10);
-            label1.Name = "label1";
-            label1.Size = new Size(214, 25);
-            label1.TabIndex = 4;
-            label1.Text = "Listado de Vendedores";
+            FechaIngreso.Frozen = true;
+            FechaIngreso.HeaderText = "Fecha Ingreso";
+            FechaIngreso.MinimumWidth = 6;
+            FechaIngreso.Name = "FechaIngreso";
+            FechaIngreso.ReadOnly = true;
+            FechaIngreso.Width = 150;
             // 
             // ListadoVendedores
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(667, 292);
+            ClientSize = new Size(850, 292);
             Controls.Add(label1);
             Controls.Add(btnNuevo);
             Controls.Add(DatosPartidos);
@@ -161,11 +158,11 @@ namespace presentación
         private DataGridView DatosPartidos;
         private Button btnNuevo;
         private Label label1;
-        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn Identificacion;
         private DataGridViewTextBoxColumn Nombre;
         private DataGridViewTextBoxColumn Apellido;
         private DataGridViewTextBoxColumn FechaNacimiento;
-        private DataGridViewTextBoxColumn FechaRegistro;
+        private DataGridViewTextBoxColumn FechaIngreso;
     }
 }

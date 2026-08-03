@@ -87,7 +87,7 @@ namespace presentación
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(336, 470);
+            panel1.Size = new Size(336, 519);
             panel1.TabIndex = 2;
             // 
             // label4
@@ -143,10 +143,10 @@ namespace presentación
             btnVentas.FlatStyle = FlatStyle.Flat;
             btnVentas.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnVentas.ForeColor = SystemColors.ButtonHighlight;
-            btnVentas.Location = new Point(35, 376);
+            btnVentas.Location = new Point(35, 387);
             btnVentas.Margin = new Padding(3, 2, 3, 2);
             btnVentas.Name = "btnVentas";
-            btnVentas.Size = new Size(185, 22);
+            btnVentas.Size = new Size(185, 26);
             btnVentas.TabIndex = 7;
             btnVentas.Text = "Ventas";
             btnVentas.UseVisualStyleBackColor = false;
@@ -158,10 +158,10 @@ namespace presentación
             btnVendedores.FlatStyle = FlatStyle.Flat;
             btnVendedores.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnVendedores.ForeColor = SystemColors.ButtonHighlight;
-            btnVendedores.Location = new Point(35, 298);
+            btnVendedores.Location = new Point(35, 289);
             btnVendedores.Margin = new Padding(3, 2, 3, 2);
             btnVendedores.Name = "btnVendedores";
-            btnVendedores.Size = new Size(185, 22);
+            btnVendedores.Size = new Size(185, 31);
             btnVendedores.TabIndex = 6;
             btnVendedores.Text = "Vendedores";
             btnVendedores.UseVisualStyleBackColor = false;
@@ -176,7 +176,7 @@ namespace presentación
             btnLocalidadesPartido.Location = new Point(35, 352);
             btnLocalidadesPartido.Margin = new Padding(3, 2, 3, 2);
             btnLocalidadesPartido.Name = "btnLocalidadesPartido";
-            btnLocalidadesPartido.Size = new Size(185, 22);
+            btnLocalidadesPartido.Size = new Size(185, 31);
             btnLocalidadesPartido.TabIndex = 5;
             btnLocalidadesPartido.Text = "Localidades por Partido";
             btnLocalidadesPartido.UseVisualStyleBackColor = false;
@@ -188,10 +188,10 @@ namespace presentación
             btnLocalidades.FlatStyle = FlatStyle.Flat;
             btnLocalidades.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnLocalidades.ForeColor = SystemColors.ButtonHighlight;
-            btnLocalidades.Location = new Point(35, 245);
+            btnLocalidades.Location = new Point(37, 219);
             btnLocalidades.Margin = new Padding(3, 2, 3, 2);
             btnLocalidades.Name = "btnLocalidades";
-            btnLocalidades.Size = new Size(185, 22);
+            btnLocalidades.Size = new Size(185, 31);
             btnLocalidades.TabIndex = 4;
             btnLocalidades.Text = "Localidades";
             btnLocalidades.UseVisualStyleBackColor = false;
@@ -203,10 +203,10 @@ namespace presentación
             btnPartidos.FlatStyle = FlatStyle.Flat;
             btnPartidos.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnPartidos.ForeColor = SystemColors.ButtonHighlight;
-            btnPartidos.Location = new Point(35, 272);
+            btnPartidos.Location = new Point(37, 254);
             btnPartidos.Margin = new Padding(3, 2, 3, 2);
             btnPartidos.Name = "btnPartidos";
-            btnPartidos.Size = new Size(185, 22);
+            btnPartidos.Size = new Size(185, 31);
             btnPartidos.TabIndex = 3;
             btnPartidos.Text = "Partidos";
             btnPartidos.UseVisualStyleBackColor = false;
@@ -248,7 +248,7 @@ namespace presentación
             panel2.Location = new Point(337, 0);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(575, 308);
+            panel2.Size = new Size(613, 308);
             panel2.TabIndex = 4;
             // 
             // label3
@@ -267,10 +267,10 @@ namespace presentación
             // 
             pictureBox2.Dock = DockStyle.Bottom;
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(336, 208);
+            pictureBox2.Location = new Point(336, 257);
             pictureBox2.Margin = new Padding(3, 2, 3, 2);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(576, 262);
+            pictureBox2.Size = new Size(614, 262);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 5;
             pictureBox2.TabStop = false;
@@ -279,7 +279,7 @@ namespace presentación
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(912, 470);
+            ClientSize = new Size(950, 519);
             Controls.Add(pictureBox2);
             Controls.Add(panel2);
             Controls.Add(panel1);

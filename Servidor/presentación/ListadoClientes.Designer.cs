@@ -56,7 +56,7 @@ namespace presentación
             dataGridClientes.Margin = new Padding(3, 2, 3, 2);
             dataGridClientes.Name = "dataGridClientes";
             dataGridClientes.RowHeadersWidth = 51;
-            dataGridClientes.Size = new Size(811, 307);
+            dataGridClientes.Size = new Size(899, 307);
             dataGridClientes.TabIndex = 0;
             // 
             // ID
@@ -135,10 +135,10 @@ namespace presentación
             // btnNuevoCliente
             // 
             btnNuevoCliente.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnNuevoCliente.BackColor = Color.Teal;
+            btnNuevoCliente.BackColor = Color.Green;
             btnNuevoCliente.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNuevoCliente.ForeColor = SystemColors.ButtonHighlight;
-            btnNuevoCliente.Location = new Point(642, 47);
+            btnNuevoCliente.Location = new Point(730, 47);
             btnNuevoCliente.Margin = new Padding(3, 2, 3, 2);
             btnNuevoCliente.Name = "btnNuevoCliente";
             btnNuevoCliente.Size = new Size(179, 37);
@@ -151,7 +151,7 @@ namespace presentación
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(822, 400);
+            ClientSize = new Size(908, 400);
             Controls.Add(btnNuevoCliente);
             Controls.Add(label1);
             Controls.Add(dataGridClientes);

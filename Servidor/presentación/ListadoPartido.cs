@@ -38,6 +38,7 @@ namespace presentación
 
                 foreach (var p in lista)
                 {
+                    Console.WriteLine(p.ToString());
                     DatosPartidos.Rows.Add(p.IdPartido, p.Rival, p.Fecha.ToShortDateString(), p.Hora, p.Activo);
                 }
             }

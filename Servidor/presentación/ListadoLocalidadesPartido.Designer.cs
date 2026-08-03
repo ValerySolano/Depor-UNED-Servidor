@@ -60,7 +60,7 @@ namespace presentación
             DatosLoalidadesPartido.Margin = new Padding(3, 2, 3, 2);
             DatosLoalidadesPartido.Name = "DatosLoalidadesPartido";
             DatosLoalidadesPartido.RowHeadersWidth = 51;
-            DatosLoalidadesPartido.Size = new Size(732, 242);
+            DatosLoalidadesPartido.Size = new Size(693, 242);
             DatosLoalidadesPartido.TabIndex = 0;
             // 
             // Id
@@ -149,10 +149,10 @@ namespace presentación
             btnNuevo.BackColor = Color.Green;
             btnNuevo.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNuevo.ForeColor = SystemColors.ButtonHighlight;
-            btnNuevo.Location = new Point(596, 52);
+            btnNuevo.Location = new Point(557, 47);
             btnNuevo.Margin = new Padding(3, 2, 3, 2);
             btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(136, 31);
+            btnNuevo.Size = new Size(136, 36);
             btnNuevo.TabIndex = 1;
             btnNuevo.Text = "+Nuevo";
             btnNuevo.UseVisualStyleBackColor = false;
@@ -173,7 +173,7 @@ namespace presentación
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(734, 329);
+            ClientSize = new Size(695, 329);
             Controls.Add(DatosLoalidadesPartido);
             Controls.Add(label1);
             Controls.Add(btnNuevo);

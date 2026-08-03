@@ -1,4 +1,10 @@
-﻿using LogicaNegocios;
+﻿/*
+* UNED - Programación Avanzada
+* Proyecto#2 Sistema de administración de partidos de fútbol
+* Autor: Valery Fonseca Solano
+* Fecha: 01/08/2026
+*/
+using LogicaNegocios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,19 +19,22 @@ using Entidades;
 using Newtonsoft.Json;
 using System.Xml.Serialization;
 
-
 namespace presentación
 {
     public partial class ServidorInformacion : Form
     {
+        // Variable para la comunicación TCP
         private readonly NegocioComunicacionTCP comunicacionTCP = new NegocioComunicacionTCP();
+       // Variables de lógica de negocio
         private readonly LogicaCliente logicaCliente = new LogicaCliente();
         private readonly LogicaVenta logicaVenta = new LogicaVenta();
         private readonly LogicaPartido logicaPartido = new LogicaPartido();
         private readonly LogicaLocalidad logicaLocalidad = new LogicaLocalidad();
         private readonly LogicaLocalidadPartido logicaLocalidadPartido = new LogicaLocalidadPartido();
 
+        // Delegados para actualizar la interfaz de usuario desde hilos diferentes
         private delegate void EscribirEnTextBoxDelegate(string texto);
+        // Delegado para modificar el ListBox de clientes conectados
         private delegate void ModificarListBoxDelegate(string texto, bool agregar);
 
         EscribirEnTextBoxDelegate modificarTextotxtBitacora;
@@ -38,25 +47,28 @@ namespace presentación
             modificarTextotxtBitacora = new EscribirEnTextBoxDelegate(EcribirEnTextBox);
             modificarListBoxClientes = new ModificarListBoxDelegate(ModificarListBox);
         }
+        // Manejo de eventos para recibir mensajes del cliente
         private void ComunicacionTCP_MensajeRecibido(object sender, (string mensaje, StreamWriter streamWriter) e) {
             try
             {
                 if (string.IsNullOrWhiteSpace(e.mensaje))
                 {
+                    // 
                     txtBitacora.Invoke(modificarTextotxtBitacora, 
                         new object[] { "Se recibió un mensaje vacío o null. Ignorando..." });
                     return;
                 }
-
+                // Deserializar el mensaje recibido en un objeto MensajeSocket
                 var mensajeRecibido = JsonConvert.DeserializeObject<MensajeSocket<object>>(e.mensaje);
                 
                 if (mensajeRecibido == null)
                 {
+                    // Manejar el caso en que la deserialización falle
                     txtBitacora.Invoke(modificarTextotxtBitacora, 
                         new object[] { "No se pudo deserializar el mensaje. Ignorando..." });
                     return;
                 }
-
+                // Llamar al método correspondiente según el valor de "Metodo"
                 SeleccionarMetodo(mensajeRecibido.Metodo, mensajeRecibido.Entidad, ref e.streamWriter);
             }
             catch (System.Text.Json.JsonException ex)
@@ -72,28 +84,37 @@ namespace presentación
         {
             switch (pMetodo)
             {
+                // Llama al metodo conectar para agregar el cliente a la lista de clientes conectados
                 case "Conectar":
                     Conectar((string) entidad);
                     break;
+                // Llama al metodo para consultar un cliente
                 case "ConsultarCliente":
+                    // Deserializar la entidad del cliente
                     var entidadCliente = JsonConvert.DeserializeObject<Cliente>(JsonConvert.SerializeObject(entidad));
+                    // Agregar el cliente a la lista de clientes
                     logicaCliente.AgregarCliente(entidadCliente);
                     break;
+                // Llama al metodo para consultar un cliente
                 case "ValidarIdentificacion":
                     var identificacionCliente = (string)entidad;
+                    // Buscar el cliente en la lista de clientes
                     var clienteEncontrado = logicaCliente.ObtenerClientes()
                         .FirstOrDefault(cliente => cliente.Identificacion == identificacionCliente);
                     
                     if (clienteEncontrado == null)
-                    {
+                    {   
+                        // Si no se encuentra el cliente, enviar respuesta "NOEXISTE"
                         EnviarRespuesta("NOEXISTE", ref servidorStreamWriter);
                     }
                     else if (!clienteEncontrado.Activo)
                     {
+                        // Si el cliente está inactivo, enviar respuesta "INACTIVO"
                         EnviarRespuesta("INACTIVO", ref servidorStreamWriter);
                     }
                     else
                     {
+                        // Si el cliente es válido, enviar respuesta "VALIDO"
                         EnviarRespuesta("VALIDO", ref servidorStreamWriter);
                     }
                     break;
@@ -160,8 +181,10 @@ namespace presentación
         {
             try
             {
+                // Obtener la lista de clientes desde la lógica de negocio
                 List<Cliente> clientes = new List<Cliente>();
                 clientes = logicaCliente.ObtenerClientes();
+                // Serializar la lista de clientes a JSON y enviarla al cliente
                 EnviarRespuesta(JsonConvert.SerializeObject(cliente), ref servidorStreamWriter);
             }
             catch (Exception ex)
